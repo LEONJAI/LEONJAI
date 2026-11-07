@@ -1,5 +1,5 @@
 window.APP_CONFIG = {
-  CONTACT_EMAIL: "hello@jeisaru.com",
+  CONTACT_EMAIL: "real.leonjai@gmail.com",
 
   // Advertising and analytics. Leave blank until you have the IDs; nothing loads while blank.
   GA4_ID: "",          // Google Analytics 4, e.g. "G-XXXXXXXXXX"
@@ -7,8 +7,8 @@ window.APP_CONFIG = {
   WHATSAPP: "",        // international digits only, e.g. "639161234567"
   MESSENGER: "",       // Facebook page username, e.g. "leonjai"
 
-  SUPABASE_URL: "https://uxcfhaxcjmwqcmtehvhb.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_x33FqWGCLBE8TxZMzO3U7g_NpiJ3Y78",
+  SUPABASE_URL: "https://jdilbwzpnfrzuliimgdc.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY",
 
   // Dollar buttons: paste a Payoneer or Wise payment link when you have one.
   PAY_LINKS: {

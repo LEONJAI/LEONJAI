@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pay in pesos – LeonjAI</title>
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<script src="../assets/js/theme.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+ <header><a class="logo" href="../../"><img src="../assets/img/leonjai-logo.png" alt="LeonjAI" width="565" height="160"></a><nav><a href="../../#pricing">Back to pricing</a></nav></header>
+
+ <main class="auth peso">
+  <h1>Pay in pesos</h1>
+  <p class="muted">Order: <strong id="item"></strong></p>
+  <p class="amount" id="amount"></p>
+
+  <ol class="steps">
+   <li>Send the exact amount using GCash, Maya QR or bank transfer below.</li>
+   <li>Write this reference in the message or notes: <strong class="ref" id="ref"></strong></li>
+   <li>Email us a screenshot of your receipt. We start your project once we confirm the payment.</li>
+  </ol>
+
+  <div id="methods"></div>
+  <img id="qr" class="qr" alt="Payment QR code" hidden>
+
+  <a class="btn" id="mail" href="#">Email my receipt</a>
+  <p class="muted small">Only pay to the account names shown on this page.</p>
+ </main>
+</div>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/pay-peso.js"></script>
+</body>
+</html>

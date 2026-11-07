@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Log in – LeonjAI</title>
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<script src="../assets/js/theme.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+ <header><a class="logo" href="../../"><img src="../assets/img/leonjai-logo.png" alt="LeonjAI" width="565" height="160"></a><nav><a href="../../">Home</a></nav></header>
+
+ <main class="auth" id="guest">
+  <h1 id="title">Log in</h1>
+
+  <div id="signupFields" hidden>
+   <div class="row">
+    <div><label for="firstName">First name</label><input id="firstName" type="text" autocomplete="given-name"></div>
+    <div><label for="lastName">Last name</label><input id="lastName" type="text" autocomplete="family-name"></div>
+   </div>
+   <label for="username">Username</label>
+   <input id="username" type="text" autocomplete="username" placeholder="letters, numbers, underscore">
+   <label for="birthday">Birthday</label>
+   <input id="birthday" type="date" autocomplete="bday">
+   <label for="address">Address</label>
+   <input id="address" type="text" autocomplete="street-address">
+  </div>
+
+  <label for="email">Email</label>
+  <input id="email" type="email" autocomplete="email">
+  <label for="password">Password</label>
+  <input id="password" type="password" autocomplete="current-password" minlength="8">
+  <button class="link" id="forgot" type="button">Forgot password?</button>
+  <button class="btn" id="submit">Log in</button>
+  <button class="link" id="toggle">Need an account? Sign up</button>
+  <div class="msg" id="msg" role="status"></div>
+ </main>
+</div>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/showpass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="../assets/js/login.js"></script>
+</body>
+</html>

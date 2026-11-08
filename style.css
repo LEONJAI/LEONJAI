@@ -172,3 +172,34 @@ header .btn{padding:11px 20px;font-size:13px}
 .art small{background:var(--card);padding:0 5px;left:10px;bottom:9px}
 @keyframes frame{from{clip-path:inset(0 100% 100% 0)}to{clip-path:inset(-4px -4px -4px -4px)}}
 @media(prefers-reduced-motion:reduce){.art::before,.art::after{animation:none}}
+/* larger content sections: scales width and height together, up to 80% on big screens */
+@media(min-width:1000px){section:not(.hero){zoom:1.1}}
+@media(min-width:1200px){section:not(.hero){zoom:1.3}}
+@media(min-width:1400px){section:not(.hero){zoom:1.5}}
+@media(min-width:1650px){section:not(.hero){zoom:1.8}}
+/* animated previews, 3-column gallery, autoplay button, bigger login */
+#gal{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media(min-width:700px){#gal{grid-template-columns:repeat(3,1fr)}}
+.kb{animation:kb 9s ease-in-out infinite alternate;transform-origin:100px 60px}@keyframes kb{to{transform:scale(1.15) translate(-4px,-3px)}}
+.bob{animation:bob 4s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-8px)}}
+.drift{animation:drift 9s linear infinite alternate}@keyframes drift{to{transform:translateX(40px)}}.d2{animation-duration:12s;animation-direction:alternate-reverse}
+.tw{animation:tw 2s ease-in-out infinite}@keyframes tw{50%{opacity:.15}}
+.spin{animation:spin 8s linear infinite;transform-origin:100px 60px}@keyframes spin{to{transform:rotate(360deg)}}
+.pul{animation:pul 2.4s ease-in-out infinite;transform-origin:100px 60px}@keyframes pul{50%{transform:scale(1.15)}}
+.sw2{animation:sw2 3s ease-in-out infinite}@keyframes sw2{from{transform:translateX(-120px) skewX(-20deg)}to{transform:translateX(260px) skewX(-20deg)}}
+.fl{animation:fl 5s ease-in-out infinite alternate}@keyframes fl{to{transform:translate(50px,-20px)}}.fl2{animation-duration:7s;animation-direction:alternate-reverse}
+.pg{animation:pg 6s linear infinite;transform-origin:left;transform-box:fill-box}@keyframes pg{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.kb,.bob,.drift,.tw,.spin,.pul,.sw2,.fl,.pg{animation:none}}
+.ctl .pp{font-size:9px;letter-spacing:-1px}
+dialog{max-width:540px;padding:32px;font-size:16px;line-height:1.6}
+dialog h3{font-size:34px;margin-bottom:8px}
+dialog p[style*='font-size:11px']{font-size:15px!important}
+dialog ul{font-size:15px!important}
+dialog #af{gap:14px!important}
+dialog input{font-size:17px;padding:15px 16px;border:2px solid var(--line)}
+dialog input:focus{border-color:var(--shu);outline:0;box-shadow:0 0 0 3px rgba(200,56,43,.25)}
+dialog .btn{font-size:16px;padding:14px 22px}
+dialog #am{font-size:14px!important;min-height:20px!important;color:#b3261e!important}
+:root[data-theme=dark] dialog #am{color:#ff9d92!important}
+dialog #sw{font-size:15px}
+dialog .tabs button{font-size:14px;padding:9px 18px}

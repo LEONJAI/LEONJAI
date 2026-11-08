@@ -5,4 +5,4 @@ Disallow: /app/login/
 Disallow: /app/reset/
 Disallow: /app/pay-peso/
 
-Sitemap: https://your-domain.example/sitemap.xml
+Sitemap: https://jeisaru.com/sitemap.xml

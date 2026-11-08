@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /app/account
-Disallow: /app/pay-peso
-Disallow: /app/reset
-
-Sitemap: https://jeisaru.com/sitemap.xml

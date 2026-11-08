@@ -1,7 +1,7 @@
 // Site settings. Edit, save, reload. Use the anon (public) key only, never the service_role key.
 window.LEONJAI_CONFIG = {
-  SUPABASE_URL: 'https://YOUR-PROJECT.supabase.co',
-  SUPABASE_ANON_KEY: 'YOUR-ANON-KEY',
+  SUPABASE_URL: 'https://jdilbwzpnfrzuliimgdc.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY',
   CONTACT_EMAIL: 'hello@leonjai.example',
   SITE_URL: 'https://your-domain.example/',
   PESO_RATE: 54, // pesos per US dollar, same rate the Pay buttons show

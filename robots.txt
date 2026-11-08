@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /app/account/
+Disallow: /app/login/
+Disallow: /app/reset/
+Disallow: /app/pay-peso/
+
+Sitemap: https://your-domain.example/sitemap.xml

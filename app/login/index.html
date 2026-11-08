@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Sign in – LeonjAI</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/pages.css">
+</head>
+<body data-app="../">
+<header><div class="bar">
+<a class="logo" href="../../index.html"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
+<nav><a href="../../index.html#work">Work</a><a href="../../index.html#services">Services</a><a href="../../index.html#gallery">Gallery</a><a href="../../index.html#pricing">Pricing</a><a href="../../index.html#quote">Contact</a></nav>
+<button class="btn out" id="acct">My account</button>
+<button class="sw" id="theme" aria-label="Toggle dark mode"><span>Dark mode</span><b></b></button>
+<button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></header>
+<main class="auth"><div class="card">
+<h1>Sign in</h1>
+<p class="lead">Keep your orders, quote requests and payments in one place.</p>
+<div class="tabs" role="group" aria-label="Sign in or create account"><button type="button" id="t-in" class="on">Sign in</button><button type="button" id="t-up">Create account</button></div>
+<form id="lf" novalidate>
+<div class="field" id="name-row" hidden><label for="nm">Your name</label><input id="nm" autocomplete="name"></div>
+<div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+<div class="field"><label for="pw">Password</label><div class="pw"><input id="pw" type="password" autocomplete="current-password"><button type="button" class="eye" data-showpass="pw" aria-label="Show password">Show</button></div></div>
+<div class="msg" id="msg" role="alert"></div>
+<button class="btn" id="go">Sign in</button>
+</form>
+<div class="links"><a href="../reset/index.html">Forgot password?</a><a href="../../index.html">Back to site</a></div>
+</div></main>
+<footer>© 2026 LeonjAI Design Studio</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/showpass.js"></script>
+<script src="../assets/js/login.js"></script>
+<script src="../assets/js/nav-auth.js"></script>
+<script src="../assets/js/menu.js"></script>
+</body>
+</html>

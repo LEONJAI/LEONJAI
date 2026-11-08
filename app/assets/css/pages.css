@@ -1,0 +1,26 @@
+/* Styles for login, account, reset and pay-peso pages. Large type for easy reading. */
+[hidden]{display:none!important}
+main.auth{max-width:540px;margin:48px auto 80px;padding:0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:32px 28px;box-shadow:6px 6px 0 var(--shu)}
+.card h1{font-size:36px;margin:0 0 6px}
+.card h2{font-size:22px;margin:22px 0 4px;text-align:left}
+.card h2::after{display:none}
+.lead{color:var(--mute);font-size:16px;margin:0 0 20px}
+.card .tabs{justify-content:flex-start;margin-bottom:20px}
+.card .tabs button{font-size:15px;padding:10px 20px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field label{font-size:16px;font-weight:600}
+.field input,.field select{width:100%;font:17px Inter,sans-serif;padding:14px 16px;border:2px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink)}
+.field input:focus,.field select:focus{border-color:var(--shu);outline:0;box-shadow:0 0 0 3px rgba(200,56,43,.25)}
+.pw{position:relative}.pw input{padding-right:84px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--mute);font-size:15px;font-weight:600;padding:10px}
+.card .btn{font-size:17px;padding:14px 22px;width:100%}
+.card .row2 .btn{width:auto}
+.msg{min-height:24px;font-size:15px;margin:2px 0 12px}.msg.err{color:#b3261e}.msg.ok{color:#2e7d32}
+:root[data-theme=dark] .msg.err{color:#ff9d92}:root[data-theme=dark] .msg.ok{color:#8fd19e}
+.links{display:flex;justify-content:space-between;gap:12px;font-size:16px;margin-top:18px}
+.list{list-style:none;padding:0;margin:0 0 8px}.list li{padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}.list small{display:block;color:var(--mute);font-size:14px}
+.sum{border:1px solid var(--line);padding:14px 16px;margin-bottom:16px;font-size:16px}
+.sum b{font:600 32px 'Cormorant Garamond',serif;display:block}
+.how{background:var(--bg);border-left:3px solid var(--shu);padding:12px 16px;margin-bottom:18px;font-size:16px;line-height:1.7}
+.row2{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}

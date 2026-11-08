@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Pay in pesos – LeonjAI</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/pages.css">
+</head>
+<body data-app="../">
+<header><div class="bar">
+<a class="logo" href="../../index.html"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
+<nav><a href="../../index.html#work">Work</a><a href="../../index.html#services">Services</a><a href="../../index.html#gallery">Gallery</a><a href="../../index.html#pricing">Pricing</a><a href="../../index.html#quote">Contact</a></nav>
+<button class="btn out" id="acct">My account</button>
+<button class="sw" id="theme" aria-label="Toggle dark mode"><span>Dark mode</span><b></b></button>
+<button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></header>
+<main class="auth"><div class="card">
+<h1>Pay in pesos</h1>
+<div id="none" hidden><p class="lead">Pick a service in the pricing section first.</p><a class="btn" href="../../index.html#pricing">See pricing</a></div>
+<div id="has" hidden>
+<div class="sum"><span id="item"></span><b id="amt"></b></div>
+<div class="how" id="how"></div>
+<form id="pf" novalidate>
+<div class="field"><label for="method">Payment method</label><select id="method"><option value="gcash">GCash</option><option value="bank">Bank transfer</option></select></div>
+<div class="field"><label for="ref">Reference number</label><input id="ref" autocomplete="off" placeholder="From your payment receipt"></div>
+<div class="msg" id="msg" role="alert"></div>
+<button class="btn">I have paid</button>
+</form>
+<p class="lead" id="login-note" hidden>Please <a href="../login/index.html">sign in</a> first so we can match the payment to your order.</p>
+</div>
+</div></main>
+<footer>© 2026 LeonjAI Design Studio</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/pay.js"></script>
+<script src="../assets/js/pay-peso.js"></script>
+<script src="../assets/js/nav-auth.js"></script>
+<script src="../assets/js/menu.js"></script>
+</body>
+</html>

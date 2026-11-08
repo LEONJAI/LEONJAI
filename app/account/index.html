@@ -35,7 +35,15 @@
 
 <button class="row-btn" data-panel="p-details" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile details</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 <div class="panel2" id="p-details" hidden>
-<form id="pf" class="field" novalidate><label for="nm">Your name</label><input id="nm" autocomplete="name"><button class="btn" style="margin-top:10px">Save name</button></form>
+<form id="pf" novalidate>
+<div class="field"><label for="nm">Full name</label><input id="nm" autocomplete="name"></div>
+<div class="field"><label for="ad">Address</label><input id="ad" autocomplete="street-address"></div>
+<div class="field"><label for="bd">Birthday</label><input id="bd" type="date" autocomplete="bday"></div>
+<div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" autocomplete="tel" placeholder="+63 900 000 0000"></div>
+<div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+<div class="msg" id="dmsg" role="alert"></div>
+<button class="btn">Save details</button>
+</form>
 </div>
 
 <button class="row-btn" data-panel="p-orders" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span>Orders</span><span class="count" id="ocount">0</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
@@ -46,7 +54,7 @@
 <button class="btn gold" id="checkout" type="button" disabled>Check out</button>
 </div>
 
-<button class="row-btn" data-panel="p-list" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span>Order list</span><span class="count" id="pcount">0</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+<button class="row-btn" data-panel="p-list" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span>Order list</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 <div class="panel2" id="p-list" hidden>
 <ul class="list" id="pending"></ul>
 <button class="btn" id="place" type="button" hidden>Place order, pay later</button>
@@ -66,6 +74,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/theme.js"></script>
+<script src="../assets/js/petals.js"></script>
 <script src="../assets/js/cart.js"></script>
 <script src="../assets/js/account.js"></script>
 <script src="../assets/js/nav-auth.js"></script>

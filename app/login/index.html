@@ -23,7 +23,12 @@
 <p class="lead">Keep your orders, quote requests and payments in one place.</p>
 <div class="tabs" role="group" aria-label="Sign in or create account"><button type="button" id="t-in" class="on">Sign in</button><button type="button" id="t-up">Create account</button></div>
 <form id="lf" novalidate>
-<div class="field" id="name-row" hidden><label for="nm">Your name</label><input id="nm" autocomplete="name"></div>
+<div id="up-fields" hidden>
+<div class="field"><label for="nm">Full name</label><input id="nm" autocomplete="name"></div>
+<div class="field"><label for="ad">Address</label><input id="ad" autocomplete="street-address"></div>
+<div class="field"><label for="bd">Birthday</label><input id="bd" type="date" autocomplete="bday"></div>
+<div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" autocomplete="tel" placeholder="+63 900 000 0000"></div>
+</div>
 <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
 <div class="field"><label for="pw">Password</label><div class="pw"><input id="pw" type="password" autocomplete="current-password"><button type="button" class="eye" data-showpass="pw" aria-label="Show password">Show</button></div></div>
 <div class="msg" id="msg" role="alert"></div>
@@ -35,6 +40,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/theme.js"></script>
+<script src="../assets/js/petals.js"></script>
 <script src="../assets/js/cart.js"></script>
 <script src="../assets/js/showpass.js"></script>
 <script src="../assets/js/login.js"></script>

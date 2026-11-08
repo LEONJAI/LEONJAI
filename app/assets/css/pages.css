@@ -56,3 +56,7 @@ main.auth{max-width:540px;margin:48px auto 80px;padding:0 18px}
 .tgl[aria-checked=true] i{transform:translateX(26px);background:var(--card)}
 .panel2 .list{margin-bottom:14px}
 .panel2 .field{margin-bottom:0}
+
+/* Checkerboard page background for login, profile, reset and payment pages */
+body[data-app="../"]{--chk:rgba(120,100,70,.08);background-color:var(--bg);background-image:conic-gradient(var(--chk) 25%,transparent 0 50%,var(--chk) 0 75%,transparent 0);background-size:96px 96px;background-attachment:fixed}
+:root[data-theme=dark] body[data-app="../"]{--chk:rgba(255,255,255,.045)}

@@ -28,7 +28,6 @@
     } else av.textContent = nameOf().charAt(0).toUpperCase();
   }
   drawHead();
-  q('#nm').value = prof.full_name || '';
   q('#acc').hidden = false;
 
   // Rows that open a panel
@@ -61,13 +60,28 @@
     img.src = url;
   };
 
-  // Name
+  // Details
+  q('#nm').value = prof.full_name || ''; q('#ad').value = prof.address || ''; q('#bd').value = prof.birthday || ''; q('#ph').value = prof.phone || ''; q('#em').value = user.email;
   q('#pf').onsubmit = async e => {
     e.preventDefault();
-    const full_name = q('#nm').value.trim();
-    const { error } = await sb.from('profiles').update({ full_name }).eq('id', user.id);
-    if (error) return say(error.message);
-    prof.full_name = full_name; drawHead(); say('Saved.', true);
+    const m = q('#dmsg'), btn = q('#pf button'), em = q('#em').value.trim().toLowerCase(), bd = q('#bd').value, ph = q('#ph').value.trim(), nm = q('#nm').value.trim();
+    const bad = t => { m.textContent = t; m.className = 'msg err'; };
+    if (!nm) return bad('Add your full name.');
+    if (!/^\S+@\S+\.\S+$/.test(em)) return bad('Enter a valid email.');
+    if (bd && (bd > new Date().toISOString().slice(0, 10) || bd < '1900-01-01')) return bad('Check the birthday.');
+    if (ph && !/^[+0-9][0-9\s\-()]{6,19}$/.test(ph)) return bad('Check the contact number.');
+    btn.disabled = true;
+    const upd = { full_name: nm, address: q('#ad').value.trim() || null, birthday: bd || null, phone: ph || null };
+    const { error } = await sb.from('profiles').update(upd).eq('id', user.id);
+    if (error) { btn.disabled = false; return bad('Could not save. Run migration8.sql in Supabase.'); }
+    Object.assign(prof, upd); drawHead();
+    let note = 'Saved.';
+    if (em !== user.email.toLowerCase()) {
+      const r = await sb.auth.updateUser({ email: em });
+      if (r.error) { btn.disabled = false; return bad(r.error.message); }
+      note = 'Saved. Check your new email to confirm the change.';
+    }
+    btn.disabled = false; m.textContent = note; m.className = 'msg ok';
   };
 
   // Orders
@@ -80,7 +94,6 @@
   const renderPending = () => {
     const C = window.LJCart, its = C ? C.items() : [], ul = q('#pending');
     ul.textContent = '';
-    q('#pcount').textContent = C ? C.count() : 0;
     q('#place').hidden = !its.length;
     q('#checkout').disabled = !its.length;
     if (!its.length) { const li = document.createElement('li'); li.textContent = 'Your order list is empty. Use Add order on the pricing or gallery.'; ul.append(li); return; }

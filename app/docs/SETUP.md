@@ -4,7 +4,7 @@
 ```
 CNAME, index.html, robots.txt, sitemap.xml
 app/
-  account/ login/ reset/ pay-peso/    pages
+  account/ login/ reset/ pay-peso/ media/ pages
   assets/css  assets/img  assets/js   styles, images, scripts
   database/                           schema.sql, migration.sql to migration8.sql
   docs/                               this file

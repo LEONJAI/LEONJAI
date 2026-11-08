@@ -30,6 +30,13 @@ main.auth{max-width:540px;margin:48px auto 80px;padding:0 18px}
 /* Profile page */
 .auth.center{min-height:calc(100vh - 130px);display:flex;align-items:center;justify-content:center;margin-top:24px;margin-bottom:24px}
 .auth.center .card{width:100%}
+.media-page-wrap{max-width:880px;margin:42px auto 72px;padding:0 18px}
+.media-page .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.media-page .media-card{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.media-page .media-card h2{font-size:24px;text-align:left;margin:0}
+.media-page .media-card h2::after{display:none}
+.media-page .media-card p{flex:1;color:var(--mute);margin:0 0 8px;font-size:15px}
+.media-page .media-note{max-width:760px;margin:18px auto 0;color:var(--mute);font-size:13px;text-align:center}
 .card.profile{padding:0;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.1);text-align:center}
 .card.profile>.lead{padding:28px}
 .pf-banner{height:110px;background:#30415d}

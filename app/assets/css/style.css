@@ -86,6 +86,35 @@ h3.grp{text-align:center;font-size:18px;margin:6px 0 10px}
 .circle{position:absolute;left:-26px;bottom:-34px;width:90px;height:90px;border-radius:50%;background:#7a2e3a99}
 .msg{grid-column:1/-1;text-align:center;font-size:11px;min-height:16px}
 footer{text-align:center;color:var(--mute);font-size:11px;padding:28px 18px 40px}
+.business-wrap{max-width:1160px;margin:0 auto;padding:48px 20px 72px}
+.business-hero{text-align:center;max-width:900px;margin:0 auto;padding:12px 8px 28px}
+.business-hero .jp{display:block;margin:0 auto 8px;color:var(--shu);font-size:13px;letter-spacing:.35em}
+.business-hero h1{font-size:clamp(32px,5vw,48px);line-height:1.08;margin:0 auto 12px}
+.business-hero p{max-width:720px;margin:0 auto;color:var(--mute);font-size:16px}
+.business-section{padding:20px 0 28px}
+#models,#how{max-width:none;margin:0;padding:28px 0}
+.business-section>h2{font-size:28px;margin-bottom:18px}
+.comparison-shell{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.business-table{width:100%;min-width:900px;border-collapse:collapse;text-align:left;font-size:15px;line-height:1.65}
+.business-table th,.business-table td{padding:18px 16px;vertical-align:top;border-bottom:1px solid var(--line)}
+.business-table thead th{background:var(--navy);color:var(--on-navy);font-size:14px;line-height:1.4;font-weight:600}
+.business-table tbody tr:last-child>*{border-bottom:0}
+.business-table tbody tr{animation:businessRowIn .55s ease both}
+.business-table tbody tr:nth-child(2){animation-delay:.12s}
+.business-table tbody th{width:16%;font-size:17px;color:var(--ink)}
+.business-table tbody td:nth-child(2){width:34%}
+.business-table tbody td:nth-child(3){width:25%}
+.business-table tbody td:nth-child(4){width:25%}
+.model-number{display:block;color:var(--shu);font-size:12px;font-weight:700;letter-spacing:.1em;margin-bottom:5px}
+.table-note{color:var(--mute);font-size:13px;text-align:center;margin:14px auto 0;max-width:880px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.choice-grid article{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--shu);border-radius:5px;padding:20px;animation:businessRowIn .55s ease both}
+.choice-grid article:nth-child(2){animation-delay:.12s}
+.choice-grid h3{font-size:21px;margin:0 0 7px}
+.choice-grid p{color:var(--mute);margin:0;font-size:15px}
+@keyframes businessRowIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.business-wrap{padding:30px 14px 52px}.business-hero h1{font-size:34px}.business-hero p{font-size:14px}.business-section>h2{font-size:24px}.business-table{font-size:14px}.business-table th,.business-table td{padding:14px 12px}.choice-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.business-table tbody tr,.choice-grid article{animation:none}}
 dialog{border:0;border-radius:8px;background:var(--card);color:var(--ink);max-width:420px;width:calc(100% - 32px);padding:20px}
 dialog::backdrop{background:#000a}dialog h3{font-size:22px;margin-bottom:6px}dialog svg{width:100%;border-radius:4px}
 dialog input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:3px;padding:9px;font:12px Inter}

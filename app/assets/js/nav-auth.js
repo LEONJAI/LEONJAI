@@ -9,6 +9,7 @@
   sb.auth.getSession().then(async ({ data }) => {
     if (!data.session) return;
     signedIn = true;
+    if (btn.textContent.trim() === 'Login') btn.textContent = 'Account';
   });
   // Home page: save the order request when a signed-in visitor sends one from the order summary.
   document.addEventListener('click', e => {

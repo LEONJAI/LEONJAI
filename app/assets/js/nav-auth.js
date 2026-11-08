@@ -3,7 +3,7 @@
   const btn = document.getElementById('acct'), app = document.body.dataset.app || '';
   if (!btn) return;
   let signedIn = false;
-  btn.addEventListener('click', e => { e.preventDefault(); location.href = app + (signedIn ? 'account/index.html' : 'login/index.html'); });
+  btn.addEventListener('click', e => { e.preventDefault(); location.href = app + (signedIn ? 'account/' : 'login/'); });
   const sb = window.LJ && window.LJ.sb;
   if (!sb) return;
   sb.auth.getSession().then(async ({ data }) => {

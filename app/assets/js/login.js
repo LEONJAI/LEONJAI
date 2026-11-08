@@ -25,7 +25,7 @@
   }
 
   if (!sb) { say('Sign-in is not set up yet. Add your Supabase URL and anon key to app/assets/js/config.js.'); return; }
-  sb.auth.getSession().then(({ data }) => { if (data.session) location.replace('../account/index.html'); });
+  sb.auth.getSession().then(({ data }) => { if (data.session) location.replace('../account/'); });
 
   q('#lf').onsubmit = async e => {
     e.preventDefault();
@@ -39,11 +39,11 @@
       if (!birthday || birthday > new Date().toISOString().slice(0, 10) || birthday < '1900-01-01') return say('Add a valid birthday.');
       if (!/^[+0-9][0-9\s\-()]{6,19}$/.test(phone)) return say('Add a valid contact number.');
       btn.disabled = true;
-      const { data, error } = await sb.auth.signUp({ email: em, password: pw, options: { data: { full_name: name, address, birthday, phone }, emailRedirectTo: (cfg.SITE_URL || location.origin + '/') + 'app/account/index.html' } });
+      const { data, error } = await sb.auth.signUp({ email: em, password: pw, options: { data: { full_name: name, address, birthday, phone }, emailRedirectTo: (cfg.SITE_URL || location.origin + '/') + 'app/account/' } });
       if (error) { btn.disabled = false; return say(error.message); }
       if (!data.session) {
         say('Confirmation link sent to ' + em + '. Taking you to the sign-in page...', true);
-        setTimeout(() => { location.href = 'index.html?sent=1&email=' + encodeURIComponent(em); }, 2500);
+        setTimeout(() => { location.href = '?sent=1&email=' + encodeURIComponent(em); }, 2500);
         return;
       }
     } else {
@@ -51,6 +51,6 @@
       const { error } = await sb.auth.signInWithPassword({ email: em, password: pw });
       if (error) { btn.disabled = false; return say('Email or password is not right.'); }
     }
-    location.href = '../account/index.html';
+    location.href = '../account/';
   };
 })();

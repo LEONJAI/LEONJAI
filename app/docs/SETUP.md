@@ -14,7 +14,7 @@ app/
 1. Create a project at supabase.com.
 2. SQL Editor: run `schema.sql`, then `migration.sql`, `migration2.sql`, `migration3.sql`, `migration4.sql`, `migration5.sql`, `migration6.sql`, `migration7.sql`, `migration8.sql`, in that order.
 3. Project Settings > API: copy the Project URL and the **anon** key into `app/assets/js/config.js`. Never use the `service_role` key.
-4. Authentication > URL Configuration: set Site URL to your domain and add `https://your-domain.example/app/account/index.html` and `https://your-domain.example/app/reset/index.html` to Redirect URLs.
+4. Authentication > URL Configuration: set Site URL to your domain and add `https://your-domain.example/app/account/` and `https://your-domain.example/app/reset/` to Redirect URLs. The site uses clean folder URLs; each folder's `index.html` is served as its default page.
 5. Authentication > Providers > Email: choose whether people must confirm their email.
 
 ## Peso payments

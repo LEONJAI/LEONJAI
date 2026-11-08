@@ -62,7 +62,7 @@ document.addEventListener('click',e=>{
 const pv=e.target.closest('[data-pv]'),by=e.target.closest('[data-buy]'),pay=e.target.closest('.pay button'),gl=dlg.querySelector('[data-go]');
 if(pv){const g=G[tab][pv.dataset.pv];modal(`<h3>${g.slice(0,1)}</h3><svg viewBox="0 0 200 120"><rect width="200" height="120" fill="${g[4]}"/><circle cx="100" cy="50" r="26" fill="${g[5]}"/><text x="100" y="100" fill="#fff6" font-size="11" text-anchor="middle">PREVIEW ONLY</text></svg><p style="font-size:12px;color:var(--mute)">${g[1]}</p>`)}
 if(by){const g=G[tab][by.dataset.buy];checkout(g[0]+' (license)',g[3],cur)}
-if(pay){if(pay.dataset.c==='PHP')location.href='app/pay-peso/index.html?item='+encodeURIComponent(pay.dataset.n)+'&usd='+pay.dataset.p;else checkout(pay.dataset.n,+pay.dataset.p,pay.dataset.c)}
+if(pay){if(pay.dataset.c==='PHP')location.href='app/pay-peso/?item='+encodeURIComponent(pay.dataset.n)+'&usd='+pay.dataset.p;else checkout(pay.dataset.n,+pay.dataset.p,pay.dataset.c)}
 });
 function checkout(name,usd,c){const amt=c==='USD'?'$'+usd:'₱'+Math.round(usd*RATE*.9).toLocaleString('en-US');
 modal(`<h3>Order summary</h3><p style="margin:4px 0"><b>${name}</b></p><p style="font-size:20px;font-family:'Cormorant Garamond',serif;margin:4px 0">${amt} <small style="font:11px Inter;color:var(--mute)">${c}</small></p><p style="font-size:11px;color:var(--mute)">This is a demo, so no payment is taken. Send the order as a request and we will reply with an invoice.</p><div style="display:flex;gap:8px"><a class="btn" id="mailOrder" data-o="${encodeURIComponent(name+' · '+amt)}" href="mailto:${EMAIL}?subject=${encodeURIComponent('Order: '+name)}&body=${encodeURIComponent('I would like to order '+name+' at '+amt+' ('+c+').')}">Send order request</a></div>`)}

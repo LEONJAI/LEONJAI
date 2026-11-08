@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>if (/\/index\.html$/i.test(location.pathname)) location.replace(location.pathname.replace(/index\.html$/i, '') + location.search + location.hash);</script>
 <meta name="robots" content="noindex">
 <title>Profile – LeonjAI</title>
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -12,8 +13,8 @@
 </head>
 <body data-app="../">
 <header><div class="bar">
-<a class="logo" href="../../index.html"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
-<nav><a href="../../index.html#work">Work</a><a href="../../index.html#services">Services</a><a href="../../index.html#gallery">Gallery</a><a href="../../index.html#pricing">Pricing</a><a href="../../index.html#quote">Contact</a></nav>
+<a class="logo" href="../../"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
+<nav><a href="../../#work">Work</a><a href="../../#services">Services</a><a href="../../#gallery">Gallery</a><a href="../../#pricing">Pricing</a><a href="../../#quote">Contact</a></nav>
 <button class="btn out" id="acct">Profile</button>
 <button class="sw" id="theme" aria-label="Toggle dark mode"><span>Dark mode</span><b></b></button>
 <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -31,8 +32,6 @@
 <p class="pf-mail" id="email"></p>
 <div class="msg" id="msg" role="alert"></div>
 <div class="menu-list">
-<div class="row-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><span>Dark mode</span><button type="button" id="dm" class="tgl" role="switch" aria-checked="false" aria-label="Dark mode"><i></i></button></div>
-
 <button class="row-btn" data-panel="p-details" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile details</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 <div class="panel2" id="p-details" hidden>
 <form id="pf" novalidate>
@@ -46,23 +45,9 @@
 </form>
 </div>
 
-<button class="row-btn" data-panel="p-orders" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span>Orders</span><span class="count" id="ocount">0</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-<div class="panel2" id="p-orders" hidden>
-<p class="lead" id="osum" hidden></p>
-<ul class="list" id="orders"></ul>
-<a class="btn" id="addorder" href="../../index.html#pricing">Add order</a>
-<button class="btn gold" id="checkout" type="button" disabled>Check out</button>
-</div>
-
-<button class="row-btn" data-panel="p-list" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span>Order list</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-<div class="panel2" id="p-list" hidden>
-<ul class="list" id="pending"></ul>
-<button class="btn" id="place" type="button" hidden>Place order, pay later</button>
-</div>
-
 <button class="row-btn" data-panel="p-settings" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 <div class="panel2" id="p-settings" hidden>
-<a class="btn out" href="../reset/index.html">Change password</a>
+<a class="btn out" href="../reset/">Change password</a>
 <button class="btn out" id="del" type="button">Delete account</button>
 </div>
 

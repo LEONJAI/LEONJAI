@@ -1,21 +1,12 @@
-// Profile page: photo, details, orders, order list, settings, log out.
+// Profile page: photo, details, settings, log out.
 (async () => {
   const { sb } = window.LJ, q = s => document.querySelector(s);
   if (!sb) { q('#nocfg').hidden = false; return; }
   const { data } = await sb.auth.getSession();
-  if (!data.session) { location.replace('../login/index.html'); return; }
+  if (!data.session) { location.replace('../login/'); return; }
   const user = data.session.user;
   const say = (t, good) => { const m = q('#msg'); m.textContent = t; m.className = 'msg ' + (good ? 'ok' : 'err'); };
-  const day = d => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  const fill = (sel, rows, fmt) => {
-    const ul = q(sel); ul.textContent = '';
-    if (!rows.length) { const li = document.createElement('li'); li.textContent = 'Nothing here yet.'; ul.append(li); return; }
-    rows.forEach(r => { const [t, s] = fmt(r), li = document.createElement('li'), sm = document.createElement('small'); li.textContent = t; sm.textContent = s; li.append(sm); ul.append(li); });
-  };
-  const [p, o] = await Promise.all([
-    sb.from('profiles').select('*').eq('id', user.id).maybeSingle(),
-    sb.from('orders').select('*').order('created_at', { ascending: false }).limit(50)
-  ]);
+  const p = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
   const prof = p.data || {};
   const nameOf = () => (prof.full_name && prof.full_name.trim()) || user.email.split('@')[0];
 
@@ -34,12 +25,6 @@
   document.querySelectorAll('.row-btn[data-panel]').forEach(b => {
     b.onclick = () => { const pn = document.getElementById(b.dataset.panel), open = pn.hidden; pn.hidden = !open; b.setAttribute('aria-expanded', open); };
   });
-
-  // Dark mode switch
-  const dm = q('#dm'), syncDm = () => dm.setAttribute('aria-checked', root.dataset.theme === 'dark');
-  syncDm();
-  dm.onclick = () => { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'); syncDm(); };
-  q('#theme').addEventListener('click', () => setTimeout(syncDm, 0));
 
   // Photo: resized to 160px and saved on the profile row
   q('#cam').onclick = () => q('#file').click();
@@ -84,44 +69,13 @@
     btn.disabled = false; m.textContent = note; m.className = 'msg ok';
   };
 
-  // Orders
-  const od = o.data || [];
-  fill('#orders', od, x => [x.item, (x.amount_usd != null ? '$' + Number(x.amount_usd).toLocaleString('en-US') + ', ' : '') + x.status + ', ' + day(x.created_at)]);
-  q('#ocount').textContent = od.length;
-  if (od.length) { q('#osum').hidden = false; q('#osum').textContent = od.length + (od.length > 1 ? ' orders' : ' order') + ', total $' + od.reduce((s, x) => s + (+x.amount_usd || 0), 0).toLocaleString('en-US'); }
-
-  // Order list (not placed yet)
-  const renderPending = () => {
-    const C = window.LJCart, its = C ? C.items() : [], ul = q('#pending');
-    ul.textContent = '';
-    q('#place').hidden = !its.length;
-    q('#checkout').disabled = !its.length;
-    if (!its.length) { const li = document.createElement('li'); li.textContent = 'Your order list is empty. Use Add order on the pricing or gallery.'; ul.append(li); return; }
-    its.forEach(i => { const li = document.createElement('li'), sm = document.createElement('small'); li.textContent = i.name + (i.qty > 1 ? ' ×' + i.qty : ''); sm.textContent = C.money(i.usd * i.qty); li.append(sm); ul.append(li); });
-  };
-  renderPending();
-  if (window.LJCart) window.LJCart.onChange(renderPending);
-  q('#place').onclick = async e => {
-    const b = e.target; b.disabled = true;
-    const r = await window.LJCart.place();
-    b.disabled = false;
-    if (r.error) return say(r.error);
-    say('Order placed. Thank you!', true);
-    setTimeout(() => location.reload(), 900);
-  };
-  q('#checkout').onclick = async e => {
-    const b = e.target; b.disabled = true;
-    const r = await window.LJCart.checkout();
-    if (r.error) { b.disabled = false; say(r.error); }
-  };
-
   // Settings and log out
   q('#del').onclick = async e => {
     const b = e.target;
     if (!b.dataset.ok) { b.dataset.ok = 1; b.textContent = 'Click again to delete'; return; }
     const { error } = await sb.rpc('delete_my_account');
     if (error) return say(error.message);
-    await sb.auth.signOut(); location.href = '../../index.html';
+    await sb.auth.signOut(); location.href = '../../';
   };
-  q('#so').onclick = async () => { await sb.auth.signOut(); location.href = '../../index.html'; };
+  q('#so').onclick = async () => { await sb.auth.signOut(); location.href = '../../'; };
 })();

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>if (/\/index\.html$/i.test(location.pathname)) location.replace(location.pathname.replace(/index\.html$/i, '') + location.search + location.hash);</script>
 <meta name="robots" content="noindex">
 <title>Pay in pesos – LeonjAI</title>
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -12,15 +13,15 @@
 </head>
 <body data-app="../">
 <header><div class="bar">
-<a class="logo" href="../../index.html"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
-<nav><a href="../../index.html#work">Work</a><a href="../../index.html#services">Services</a><a href="../../index.html#gallery">Gallery</a><a href="../../index.html#pricing">Pricing</a><a href="../../index.html#quote">Contact</a></nav>
+<a class="logo" href="../../"><i>L</i><span>LeonjAI<small>デザインスタジオ</small></span></a>
+<nav><a href="../../#work">Work</a><a href="../../#services">Services</a><a href="../../#gallery">Gallery</a><a href="../../#pricing">Pricing</a><a href="../../#quote">Contact</a></nav>
 <button class="btn out" id="acct">Profile</button>
 <button class="sw" id="theme" aria-label="Toggle dark mode"><span>Dark mode</span><b></b></button>
 <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></header>
 <main class="auth"><div class="card">
 <h1>Pay in pesos</h1>
-<div id="none" hidden><p class="lead">Pick a service in the pricing section first.</p><a class="btn" href="../../index.html#pricing">See pricing</a></div>
+<div id="none" hidden><p class="lead">Pick a service in the pricing section first.</p><a class="btn" href="../../#pricing">See pricing</a></div>
 <div id="has" hidden>
 <div class="sum"><span id="item"></span><b id="amt"></b></div>
 <div class="how" id="how"></div>
@@ -30,7 +31,7 @@
 <div class="msg" id="msg" role="alert"></div>
 <button class="btn">I have paid</button>
 </form>
-<p class="lead" id="login-note" hidden>Please <a href="../login/index.html">sign in</a> first so we can match the payment to your order.</p>
+<p class="lead" id="login-note" hidden>Please <a href="../login/">sign in</a> first so we can match the payment to your order.</p>
 </div>
 </div></main>
 <footer>© 2026 LeonjAI Design Studio</footer>

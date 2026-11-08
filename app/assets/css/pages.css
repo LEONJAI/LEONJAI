@@ -32,7 +32,7 @@ main.auth{max-width:540px;margin:48px auto 80px;padding:0 18px}
 .auth.center .card{width:100%}
 .card.profile{padding:0;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.1);text-align:center}
 .card.profile>.lead{padding:28px}
-.pf-banner{height:110px;background:#ddd5c3}
+.pf-banner{height:110px;background:#30415d}
 :root[data-theme=dark] .pf-banner{background:#2c2a24}
 .avatar{position:relative;width:132px;height:132px;margin:-66px auto 0}
 .av{width:100%;height:100%;border-radius:50%;border:5px solid var(--card);background:var(--blue);color:#fff;display:grid;place-items:center;font:700 56px Inter,sans-serif;overflow:hidden}

@@ -3,7 +3,7 @@ window.LEONJAI_CONFIG = {
   SUPABASE_URL: 'https://jdilbwzpnfrzuliimgdc.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY',
   CONTACT_EMAIL: 'hello@leonjai.example',
-  SITE_URL: 'https://your-domain.example/',
+  SITE_URL: 'https://jeisaru.com/',
   PESO_RATE: 54, // pesos per US dollar, same rate the Pay buttons show
   PAY_PESO: {
     gcash: { name: 'Your name', number: '09XX XXX XXXX' },

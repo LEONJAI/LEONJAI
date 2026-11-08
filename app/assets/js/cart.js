@@ -36,7 +36,7 @@
   // Check out: save the order list, then open the peso payment page with the total.
   Cart.checkout = async () => {
     const r = await Cart.place();
-    if (r.ok) location.href = app + 'pay-peso/index.html?item=' + encodeURIComponent(r.label) + '&usd=' + r.usd;
+    if (r.ok) location.href = app + 'pay-peso/?item=' + encodeURIComponent(r.label) + '&usd=' + r.usd;
     return r;
   };
 
@@ -94,7 +94,7 @@
     const b = q('#dGo'); b.disabled = true;
     const r = await Cart.place();
     b.disabled = !items.length;
-    if (r.login) { say('Please sign in to place your order. Your list is saved.'); return setTimeout(() => { location.href = app + 'login/index.html'; }, 1200); }
+    if (r.login) { say('Please sign in to place your order. Your list is saved.'); return setTimeout(() => { location.href = app + 'login/'; }, 1200); }
     if (r.error) return say(r.error);
     say('Order placed (' + r.count + ' item' + (r.count > 1 ? 's' : '') + '). You can follow it in Profile.', true);
   };
@@ -102,7 +102,7 @@
     const b = q('#dPay'); b.disabled = true;
     const r = await Cart.checkout();
     b.disabled = !items.length;
-    if (r.login) { say('Please sign in to check out. Your list is saved.'); return setTimeout(() => { location.href = app + 'login/index.html'; }, 1200); }
+    if (r.login) { say('Please sign in to check out. Your list is saved.'); return setTimeout(() => { location.href = app + 'login/'; }, 1200); }
     if (r.error) say(r.error);
   };
   render();

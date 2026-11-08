@@ -7,7 +7,7 @@
     e.preventDefault();
     const em = q('#em').value.trim().toLowerCase(), m = q('#msg');
     if (!/^\S+@\S+\.\S+$/.test(em)) return say(m, 'Enter a valid email.');
-    const { error } = await sb.auth.resetPasswordForEmail(em, { redirectTo: (cfg.SITE_URL || location.origin + '/') + 'app/reset/index.html' });
+    const { error } = await sb.auth.resetPasswordForEmail(em, { redirectTo: (cfg.SITE_URL || location.origin + '/') + 'app/reset/' });
     say(m, error ? error.message : 'If that email has an account, a reset link is on its way.', !error);
   };
   sb.auth.onAuthStateChange(ev => {
@@ -21,6 +21,6 @@
     const { error } = await sb.auth.updateUser({ password: p });
     if (error) return say(m, error.message);
     say(m, 'Password updated. Taking you to your account.', true);
-    setTimeout(() => location.href = '../account/index.html', 1200);
+    setTimeout(() => location.href = '../account/', 1200);
   };
 })();

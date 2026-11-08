@@ -16,7 +16,7 @@ let me=store('lj_session')||null;
 const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('lj:'+s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const acctUser=()=>me?DB()[me]:null;
-function sync(){const u=acctUser();$('#acct').textContent=u?u.name.split(' ')[0]:'My account';if(u){if(!$('#qn').value)$('#qn').value=u.name;if(!$('#qe').value)$('#qe').value=me}}
+function sync(){const u=acctUser();$('#acct').textContent=u?u.name.split(' ')[0]:'Profile';if(u){if(!$('#qn').value)$('#qn').value=u.name;if(!$('#qe').value)$('#qe').value=me}}
 function log(kind,text){const d=DB();if(me&&d[me]){d[me][kind].unshift({t:text,d:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})});saveDB(d);return true}return false}
 let mode='in',sub='orders';
 function acct(){const u=acctUser();let h;

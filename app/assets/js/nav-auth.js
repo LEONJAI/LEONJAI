@@ -1,4 +1,4 @@
-// Header "My account" button on every page: goes to login or account, and shows the visitor's name.
+// Header "Profile" button on every page: goes to login or account, and shows the visitor's name.
 (() => {
   const btn = document.getElementById('acct'), app = document.body.dataset.app || '';
   if (!btn) return;
@@ -9,8 +9,6 @@
   sb.auth.getSession().then(async ({ data }) => {
     if (!data.session) return;
     signedIn = true;
-    const { data: p } = await sb.from('profiles').select('full_name').eq('id', data.session.user.id).maybeSingle();
-    btn.textContent = ((p && p.full_name) || data.session.user.email).split(' ')[0];
   });
   // Home page: save the order request when a signed-in visitor sends one from the order summary.
   document.addEventListener('click', e => {

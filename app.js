@@ -1,12 +1,65 @@
-/* ====== 1. SUPABASE CONFIG — paste your project values ====== */
+/
+/* =========================================
+   LEONJAI - SUPABASE CONFIGURATION
+========================================= */
+
 const config = window.LEONJAI_CONFIG || {};
 
 const SUPABASE_URL = config.SUPABASE_URL || "";
 const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY || "";
 const STUDIO_EMAIL = config.CONTACT_EMAIL || "";
-// Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
+
+// Payment configuration
 const CHECKOUT_URL = "";
-/* ============================================================ */
+
+// Check Supabase connection
+const configured = Boolean(
+    SUPABASE_URL &&
+    SUPABASE_ANON_KEY &&
+    !SUPABASE_URL.includes("YOUR-PROJECT") &&
+    !SUPABASE_ANON_KEY.includes("YOUR-ANON") &&
+    window.supabase &&
+    window.supabase.createClient
+);
+
+// Initialize Supabase
+const db = configured
+    ? (
+        window.LJ?.sb ||
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        )
+    )
+    : null;
+
+// Website helpers
+const $ = (s, r = document) =>
+    r.querySelector(s);
+
+const $$ = (s, r = document) =>
+    [...r.querySelectorAll(s)];
+
+// Local storage
+const store = {
+    get(k) {
+        try {
+            return localStorage.getItem(k);
+        } catch {
+            return null;
+        }
+    },
+
+    set(k, v) {
+        try {
+            localStorage.setItem(k, v);
+        } catch {}
+    }
+};
+
+/* =========================================
+   END SUPABASE CONFIGURATION
+========================================= */
 
 const configured = !SUPABASE_URL.includes("YOUR-PROJECT");
 const db = configured ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;

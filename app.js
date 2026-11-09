@@ -1,7 +1,9 @@
 /* ====== 1. SUPABASE CONFIG — paste your project values ====== */
-const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
-const STUDIO_EMAIL = "hello@leonjai.example";
+const config = window.LEONJAI_CONFIG || {};
+
+const SUPABASE_URL = config.SUPABASE_URL || "";
+const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY || "";
+const STUDIO_EMAIL = config.CONTACT_EMAIL || "";
 // Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
 const CHECKOUT_URL = "";
 /* ============================================================ */

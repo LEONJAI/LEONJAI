@@ -279,11 +279,30 @@ function refreshAuthUI() {
   $("#auth-title").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
   $("#auth-submit").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
   $("#auth-switch").textContent = tr(authMode === "in" ? "to_signup" : "to_signin");
+  $("#signup-fields").hidden = authMode !== "up";
+  $("#a-dob").required = authMode === "up";
+  $("#a-address").required = authMode === "up";
   $("#a-pass").autocomplete = authMode === "in" ? "current-password" : "new-password";
 }
 function openAuth(mode) { authMode = mode || "in"; $("#auth-msg").textContent = ""; refreshAuthUI(); authDlg.showModal(); $("#a-email").focus(); }
 $("#auth-btn").addEventListener("click", async () => { if (user) await db.auth.signOut(); else openAuth("in"); });
 $("#auth-switch").addEventListener("click", () => { authMode = authMode === "in" ? "up" : "in"; $("#auth-msg").textContent = ""; refreshAuthUI(); });
+$("#password-toggle").addEventListener("click", () => {
+  const input = $("#a-pass"), visible = input.type === "password";
+  input.type = visible ? "text" : "password";
+  $("#password-toggle").setAttribute("aria-label", visible ? "Hide password" : "Show password");
+  $("#password-toggle").setAttribute("aria-pressed", String(visible));
+  $("#password-toggle").textContent = visible ? "⊗" : "◉";
+});
+$("#forgot-password").addEventListener("click", async () => {
+  const m = $("#auth-msg"), email = $("#a-email").value.trim();
+  if (!email) { $("#a-email").focus(); m.textContent = "Enter your email address first."; m.className = "err"; return; }
+  if (!db) { m.textContent = tr("auth_demo"); m.className = "err"; return; }
+  m.textContent = tr("sending"); m.className = "";
+  const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+  m.textContent = error ? error.message : "If an account exists for that email, a password reset link has been sent.";
+  m.className = error ? "err" : "ok";
+});
 $("#auth-close").addEventListener("click", () => authDlg.close());
 authDlg.addEventListener("click", e => { if (e.target === authDlg) authDlg.close(); });
 $("#auth-form").addEventListener("submit", async e => {
@@ -292,7 +311,9 @@ $("#auth-form").addEventListener("submit", async e => {
   if (!db) return say2(tr("auth_demo"), "err");
   say2(tr("sending"));
   const email = $("#a-email").value.trim(), password = $("#a-pass").value;
-  const res = authMode === "in" ? await db.auth.signInWithPassword({ email, password }) : await db.auth.signUp({ email, password });
+  const res = authMode === "in"
+    ? await db.auth.signInWithPassword({ email, password })
+    : await db.auth.signUp({ email, password, options: { data: { date_of_birth: $("#a-dob").value, address: $("#a-address").value.trim() } } });
   if (res.error) return say2(res.error.message, "err");
   if (authMode === "up" && !res.data.session) return say2(tr("confirm_email"), "ok");
   $("#auth-form").reset(); say2(""); authDlg.close();

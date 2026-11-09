@@ -68,6 +68,7 @@ h1{font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:1.05;letter-spacing:-.02em;f
 /* section tiles */
 .head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
 .head h2{font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:700}
+#clients>.head{justify-content:center;text-align:center}
 .head .seg{border-color:rgba(0,0,0,.25)}
 .head .seg button{color:#2A1A00}
 .head .seg button[aria-pressed="true"]{background:#2A1A00;color:#fff}
@@ -135,7 +136,7 @@ main,.foot{position:relative;z-index:1}
 .light-btn{background:transparent;border-color:rgba(255,255,255,.4);color:#fff}
 
 /* dialogs */
-dialog{border:0;border-radius:20px;background:var(--dark);color:#fff;padding:0;width:min(880px,94vw);max-height:94vh;overflow:hidden}
+dialog{position:fixed;inset:0;margin:auto;border:0;border-radius:20px;background:var(--dark);color:#fff;padding:0;width:min(880px,94vw);max-height:94vh;overflow:hidden}
 dialog#auth{width:min(420px,94vw)}
 dialog::backdrop{background:rgba(8,12,26,.78);backdrop-filter:blur(6px)}
 .dlg-in{padding:18px clamp(14px,3vw,24px) 22px}
@@ -160,6 +161,11 @@ dialog::backdrop{background:rgba(8,12,26,.78);backdrop-filter:blur(6px)}
 #auth-form input{margin-bottom:14px}
 #auth-form .btn{width:100%}
 .linkbtn{display:block;margin:14px auto 0;background:none;border:0;color:#fff;opacity:.8;text-decoration:underline;text-underline-offset:3px;font:400 .85rem var(--sans);cursor:pointer}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:52px}
+.password-toggle{position:absolute;right:8px;top:7px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;font-size:1.1rem}
+.password-toggle:hover{background:rgba(15,58,92,.1)}
+.forgot-btn{margin-top:6px}
 
 /* quote section: centered intro tile, centered submit; form fields stay left-aligned */
 #quote .tile.navy{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}

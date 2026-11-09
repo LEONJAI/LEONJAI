@@ -165,10 +165,17 @@
     <form id="auth-form">
       <label for="a-email" data-i18n="q_email">Email</label>
       <input id="a-email" type="email" autocomplete="email" required>
+      <div id="signup-fields" hidden>
+        <label for="a-dob">Date of birth</label>
+        <input id="a-dob" type="date" autocomplete="bday">
+        <label for="a-address">Address</label>
+        <input id="a-address" type="text" autocomplete="street-address">
+      </div>
       <label for="a-pass" data-i18n="password">Password</label>
-      <input id="a-pass" type="password" minlength="6" autocomplete="current-password" required>
+      <div class="password-wrap"><input id="a-pass" type="password" minlength="6" autocomplete="current-password" required><button id="password-toggle" class="password-toggle" type="button" aria-label="Show password" aria-pressed="false">◉</button></div>
       <button class="btn orange-btn" id="auth-submit" type="submit"></button>
       <button class="linkbtn" id="auth-switch" type="button"></button>
+      <button class="linkbtn forgot-btn" id="forgot-password" type="button">Forgot password?</button>
       <p id="auth-msg" role="status"></p>
     </form>
   </div>

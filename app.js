@@ -1,65 +1,14 @@
-/
-/* =========================================
-   LEONJAI - SUPABASE CONFIGURATION
-========================================= */
-
-const config = window.LEONJAI_CONFIG || {};
-
-const SUPABASE_URL = config.SUPABASE_URL || "";
-const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY || "";
-const STUDIO_EMAIL = config.CONTACT_EMAIL || "";
-
-// Payment configuration
+/* ====== 1. SUPABASE CONFIG — paste your project values ======
+   Supabase Dashboard → Project Settings → API:
+   • Project URL        → SUPABASE_URL      (looks like https://abcdxyz.supabase.co)
+   • anon / public key  → SUPABASE_ANON_KEY (safe in the browser; NEVER paste the service_role key)
+   Until both are replaced, the site runs in demo mode and sign-in is disabled. */
+const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const STUDIO_EMAIL = "hello@leonjai.example";
+// Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
 const CHECKOUT_URL = "";
-
-// Check Supabase connection
-const configured = Boolean(
-    SUPABASE_URL &&
-    SUPABASE_ANON_KEY &&
-    !SUPABASE_URL.includes("YOUR-PROJECT") &&
-    !SUPABASE_ANON_KEY.includes("YOUR-ANON") &&
-    window.supabase &&
-    window.supabase.createClient
-);
-
-// Initialize Supabase
-const db = configured
-    ? (
-        window.LJ?.sb ||
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        )
-    )
-    : null;
-
-// Website helpers
-const $ = (s, r = document) =>
-    r.querySelector(s);
-
-const $$ = (s, r = document) =>
-    [...r.querySelectorAll(s)];
-
-// Local storage
-const store = {
-    get(k) {
-        try {
-            return localStorage.getItem(k);
-        } catch {
-            return null;
-        }
-    },
-
-    set(k, v) {
-        try {
-            localStorage.setItem(k, v);
-        } catch {}
-    }
-};
-
-/* =========================================
-   END SUPABASE CONFIGURATION
-========================================= */
+/* ============================================================ */
 
 const configured = !SUPABASE_URL.includes("YOUR-PROJECT");
 const db = configured ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
@@ -237,7 +186,8 @@ function spans(n) {            // how many of 12 columns each tile takes
   const full = Math.floor(n / 3) * 3, rem = n - full, out = Array(full).fill(4);
   return out.concat(rem === 1 ? [12] : rem === 2 ? [6, 6] : []);
 }
-function placeTile(t, span, rows) { t.style.setProperty("--span", span); if (rows) t.style.setProperty("--rows", rows); return t; }
+const mspans = n => Array.from({ length: n }, (_, i) => (n % 2 && i === n - 1 ? 12 : 6));   // phone layout: two tiles per row
+function placeTile(t, span, rows, m) { t.style.setProperty("--span", span); if (rows) t.style.setProperty("--rows", rows); if (m) t.style.setProperty("--mspan", m); return t; }
 function goLink(service) {
   const a = el("a", "go"); a.href = "#quote"; a.dataset.service = service;
   a.setAttribute("aria-label", "Request " + service); a.append(el("span", null, "↗")); return a;
@@ -248,16 +198,16 @@ function renderWork() {
   const g = $("#work-grid"); g.textContent = "";
   DB.work.forEach((w, i) => {
     const [s, r] = WORK_SHAPE[i] || [4, 1];
-    const t = placeTile(el("article", "tile work " + PALETTE[i % 5]), s, r);
+    const t = placeTile(el("article", "tile work " + PALETTE[i % 5]), s, r, 6);
     t.append(el("span", "pill", w.kind || ""), el("h3", null, w.title), el("p", null, w.note || ""), el("span", "ghost", initials(w.title)));
     g.append(t);
   });
 }
 function renderServices() {
   const g = $("#serv-grid"); g.textContent = "";
-  const sp = spans(DB.services.length);
+  const sp = spans(DB.services.length), ms = mspans(DB.services.length);
   DB.services.forEach((s, i) => {
-    const t = placeTile(el("article", "tile svc " + PALETTE[(i + 1) % 6]), sp[i]);
+    const t = placeTile(el("article", "tile svc " + PALETTE[(i + 1) % 6]), sp[i], 0, ms[i]);
     t.append(el("span", "pill", s.tag || ""), el("h3", null, s.title), el("p", null, s.note || ""), goLink(s.title));
     g.append(t);
   });
@@ -282,9 +232,9 @@ function renderPrices() {
   const sym = cur === "USD" ? "$" : "₱";
   ["design", "web"].forEach((grp, gi) => {
     const g = $("#price-" + grp); g.textContent = "";
-    const items = DB.prices.filter(p => p.grp === grp), sp = spans(items.length);
+    const items = DB.prices.filter(p => p.grp === grp), sp = spans(items.length), ms = mspans(items.length);
     items.forEach((p, i) => {
-      const t = placeTile(el("article", "tile prc " + PALETTE[(i + gi * 2) % 5]), sp[i]);
+      const t = placeTile(el("article", "tile prc " + PALETTE[(i + gi * 2) % 5]), sp[i], 0, ms[i]);
       const price = el("div", "price"), amt = cur === "USD" ? p.usd : p.php;
       price.append(el("small", null, T[lang].from + " "), document.createTextNode(sym + Number(amt).toLocaleString("en-US")), el("small", null, p.per || ""));
       t.append(el("h3", null, p.title), el("p", null, p.note || ""), price, goLink(p.title));
@@ -496,4 +446,21 @@ $("#copy-mail").addEventListener("click", async () => {
     target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     clean(id);
   });
+})();
+
+
+/* ---------- Mobile burger menu: nav links + Sign in live inside the dropdown ---------- */
+(function () {
+  const bar = $(".bar"), burger = $("#burger"), nav = $("#main-nav"), authBtn = $("#auth-btn"), tools = $(".tools"), quote = $(".tools .btn.small");
+  const mq = matchMedia("(max-width: 860px)");
+  const setOpen = o => { bar.classList.toggle("menu-open", o); burger.setAttribute("aria-expanded", String(o)); };
+  function place() {                       // Sign in sits in the menu on phones, in the header on desktop
+    if (mq.matches) nav.append(authBtn); else tools.insertBefore(authBtn, quote);
+    if (!mq.matches) setOpen(false);
+  }
+  burger.addEventListener("click", e => { e.stopPropagation(); setOpen(!bar.classList.contains("menu-open")); });
+  nav.addEventListener("click", e => { if (e.target.closest("a") || e.target.closest("#auth-btn")) setOpen(false); });
+  document.addEventListener("click", e => { if (!bar.contains(e.target)) setOpen(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+  mq.addEventListener("change", place); place();
 })();

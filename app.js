@@ -3,15 +3,48 @@
    • Project URL        → SUPABASE_URL      (looks like https://abcdxyz.supabase.co)
    • anon / public key  → SUPABASE_ANON_KEY (safe in the browser; NEVER paste the service_role key)
    Until both are replaced, the site runs in demo mode and sign-in is disabled. */
-   const SUPABASE_URL: "https://jdilbwzpnfrzuliimgdc.supabase.co";
-   const SUPABASE_ANON_KEY: "sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY",
+const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
 const STUDIO_EMAIL = "hello@leonjai.example";
 // Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
 const CHECKOUT_URL = "";
 /* ============================================================ */
 
-const configured = !SUPABASE_URL.includes("YOUR-PROJECT");
-const db = configured ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+/* Check the keys so the site can say exactly what is wrong instead of just "demo mode" */
+const cfgProblem = (() => {
+  const u = String(SUPABASE_URL).trim(), k = String(SUPABASE_ANON_KEY).trim();
+  if (u.includes("YOUR-PROJECT") || k.includes("YOUR-ANON")) return "keys_missing";
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.(co|in)\/?$/i.test(u)) return "url_bad";
+  let role = ""; try { role = JSON.parse(atob(k.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))).role; } catch {}
+  if (/^sb_secret_/.test(k) || role === "service_role") return "key_secret";
+  if (k.length < 30) return "key_bad";
+  if (typeof supabase === "undefined") return "lib_missing";
+  return "";
+})();
+const CFG_MSG = {
+  keys_missing: "Demo mode: add your Supabase keys in app.js to enable sign-in.",
+  url_bad: "Setup problem: SUPABASE_URL must look like https://abcdxyz.supabase.co (Supabase → Project Settings → API → Project URL).",
+  key_secret: "Setup problem: that is a SECRET key. Use the anon / public key instead, and rotate the secret one in Supabase.",
+  key_bad: "Setup problem: SUPABASE_ANON_KEY looks incomplete. Copy the whole anon / public key.",
+  lib_missing: "Setup problem: the Supabase library did not load. Check the internet connection or turn off an ad-blocker."
+};
+const configured = !cfgProblem;
+if (cfgProblem && cfgProblem !== "keys_missing") console.error("[LeonjAI] " + CFG_MSG[cfgProblem]);
+const db = configured ? supabase.createClient(String(SUPABASE_URL).trim().replace(/\/$/, ""), String(SUPABASE_ANON_KEY).trim()) : null;
+const cfgMsg = () => CFG_MSG[cfgProblem] || "";
+/* plain-English versions of common Supabase errors */
+function friendly(err) {
+  const m = String(err?.message || err || ""), l = m.toLowerCase();
+  if (l.includes("invalid login")) return "Wrong email or password.";
+  if (l.includes("not confirmed")) return "Please confirm your email first. Check your inbox and spam folder.";
+  if (l.includes("already registered") || l.includes("already been registered")) return "That email already has an account. Try signing in.";
+  if (l.includes("invalid api key") || l.includes("apikey")) return "Setup problem: the anon key in app.js is wrong. Copy it again from Project Settings → API.";
+  if (l.includes("failed to fetch") || l.includes("networkerror") || l.includes("load failed")) return "Can't reach Supabase. Check SUPABASE_URL in app.js and your connection.";
+  if (l.includes("rate limit") || l.includes("too many")) return "Too many attempts. Wait a few minutes and try again.";
+  if (l.includes("signups not allowed") || l.includes("signup is disabled")) return "Sign-ups are turned off in Supabase (Authentication → Providers → Email).";
+  if (l.includes("password") && l.includes("characters")) return "Password is too short. Use at least 6 characters.";
+  return m;
+}
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const store = {
@@ -279,12 +312,13 @@ if (db) db.auth.onAuthStateChange((_ev, session) => {
 });
 function refreshAuthUI() {
   const b = $("#auth-btn");
-  if (user) { b.textContent = `${(user.email || "").split("@")[0].slice(0, 14)} · ${tr("sign_out")}`; b.setAttribute("aria-label", `${tr("sign_out")} (${user.email})`); }
+  if (user) { const nm = (user.user_metadata?.username || (user.email || "").split("@")[0]).slice(0, 14); b.textContent = `${nm} · ${tr("sign_out")}`; b.setAttribute("aria-label", `${tr("sign_out")} (${user.email})`); }
   else { b.textContent = tr("sign_in"); b.removeAttribute("aria-label"); }
   $("#auth-title").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
   $("#auth-submit").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
   $("#auth-switch").textContent = tr(authMode === "in" ? "to_signup" : "to_signin");
   $("#signup-fields").hidden = authMode !== "up";
+  $("#a-username").required = authMode === "up";
   $("#a-dob").required = authMode === "up";
   $("#a-address").required = authMode === "up";
   $("#a-pass").autocomplete = authMode === "in" ? "current-password" : "new-password";
@@ -302,24 +336,29 @@ $("#password-toggle").addEventListener("click", () => {
 $("#forgot-password").addEventListener("click", async () => {
   const m = $("#auth-msg"), email = $("#a-email").value.trim();
   if (!email) { $("#a-email").focus(); m.textContent = "Enter your email address first."; m.className = "err"; return; }
-  if (!db) { m.textContent = tr("auth_demo"); m.className = "err"; return; }
+  if (!db) { m.textContent = cfgMsg(); m.className = "err"; return; }
   m.textContent = tr("sending"); m.className = "";
   const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
-  m.textContent = error ? error.message : "If an account exists for that email, a password reset link has been sent.";
+  m.textContent = error ? friendly(error) : "If an account exists for that email, a password reset link has been sent.";
   m.className = error ? "err" : "ok";
 });
 $("#auth-close").addEventListener("click", () => authDlg.close());
-authDlg.addEventListener("click", e => { if (e.target === authDlg) authDlg.close(); });
+// the sign-in / create-account box stays open when you tap outside it; use the ✕ button to close
 $("#auth-form").addEventListener("submit", async e => {
   e.preventDefault();
   const m = $("#auth-msg"), say2 = (x, c) => { m.textContent = x; m.className = c || ""; };
-  if (!db) return say2(tr("auth_demo"), "err");
+  if (!db) return say2(cfgMsg(), "err");
+  const email = $("#a-email").value.trim(), password = $("#a-pass").value, username = $("#a-username").value.trim();
+  if (authMode === "up" && !/^[A-Za-z0-9_.]{3,20}$/.test(username)) return say2("Username: 3–20 letters, numbers, dot or underscore.", "err");
   say2(tr("sending"));
-  const email = $("#a-email").value.trim(), password = $("#a-pass").value;
-  const res = authMode === "in"
-    ? await db.auth.signInWithPassword({ email, password })
-    : await db.auth.signUp({ email, password, options: { data: { date_of_birth: $("#a-dob").value, address: $("#a-address").value.trim() } } });
-  if (res.error) return say2(res.error.message, "err");
+  let res;
+  try {
+    res = authMode === "in"
+      ? await db.auth.signInWithPassword({ email, password })
+      : await db.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin, data: { username, date_of_birth: $("#a-dob").value, address: $("#a-address").value.trim() } } });
+  } catch (err) { return say2(friendly(err), "err"); }
+  if (res.error) return say2(friendly(res.error), "err");
+  if (authMode === "up" && res.data.user && res.data.user.identities && res.data.user.identities.length === 0) return say2(friendly("already registered"), "err");
   if (authMode === "up" && !res.data.session) return say2(tr("confirm_email"), "ok");
   $("#auth-form").reset(); say2(""); authDlg.close();
 });
@@ -412,7 +451,7 @@ form.addEventListener("submit", async e => {
   e.preventDefault();
   const v = Object.fromEntries(new FormData(form));
   if (!v.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim()) || !v.service) return say(T[lang].bad, "err");
-  if (!db) return say(T[lang].demo, "err");
+  if (!db) return say(cfgProblem === "keys_missing" ? T[lang].demo : cfgMsg(), "err");
   say(T[lang].sending);
   const { error } = await db.from("quotes").insert({ name:v.name.trim(), email:v.email.trim().toLowerCase(), service:v.service, budget:v.budget, details:v.details.trim(), lang });
   if (error) return say(T[lang].fail, "err");
@@ -432,12 +471,21 @@ $("#copy-mail").addEventListener("click", async () => {
   renderWork(); renderServices(); renderGallery(); renderClients(); fillServiceSelect(); applyLang(lang);
 })();
 
-/* ---------- Clean URLs: no "index.html" in the address bar when using the nav ---------- */
+/* ---------- Clean URLs: never show ".html" in the address bar or in links ---------- */
 (function () {
+  const strip = p => p.replace(/\/index\.html$/i, "/").replace(/\.html$/i, "");
+  const local = location.protocol !== "file:";            // skip when opening the file straight from disk
   const clean = hash => {
-    try { history.replaceState(null, "", location.pathname.replace(/\/index\.html$/, "/") + location.search + (hash || "")); } catch {}
+    if (!local) return;
+    try { history.replaceState(null, "", strip(location.pathname) + location.search + (hash || "")); } catch {}
   };
   clean(location.hash);
+  // links to other pages of this site: about.html -> about, index.html -> ./
+  $$('a[href]').forEach(a => {
+    const h = a.getAttribute("href");
+    if (/^(https?:|mailto:|tel:|#)/i.test(h) || !/\.html?([?#]|$)/i.test(h)) return;
+    a.setAttribute("href", h.replace(/(^|\/)index\.html?(?=[?#]|$)/i, "$1").replace(/\.html?(?=[?#]|$)/i, "") || "./");
+  });
   document.addEventListener("click", e => {
     const a = e.target.closest('a[href^="#"]'); if (!a) return;
     const id = a.getAttribute("href"), target = id.length > 1 && document.querySelector(id);
@@ -449,18 +497,14 @@ $("#copy-mail").addEventListener("click", async () => {
 })();
 
 
-/* ---------- Mobile burger menu: nav links + Sign in live inside the dropdown ---------- */
+/* ---------- Mobile burger menu: nav links dropdown (Sign in stays in the header) ---------- */
 (function () {
-  const bar = $(".bar"), burger = $("#burger"), nav = $("#main-nav"), authBtn = $("#auth-btn"), tools = $(".tools"), quote = $(".tools .btn.small");
+  const bar = $(".bar"), burger = $("#burger"), nav = $("#main-nav");
   const mq = matchMedia("(max-width: 860px)");
   const setOpen = o => { bar.classList.toggle("menu-open", o); burger.setAttribute("aria-expanded", String(o)); };
-  function place() {                       // Sign in sits in the menu on phones, in the header on desktop
-    if (mq.matches) nav.append(authBtn); else tools.insertBefore(authBtn, quote);
-    if (!mq.matches) setOpen(false);
-  }
   burger.addEventListener("click", e => { e.stopPropagation(); setOpen(!bar.classList.contains("menu-open")); });
-  nav.addEventListener("click", e => { if (e.target.closest("a") || e.target.closest("#auth-btn")) setOpen(false); });
+  nav.addEventListener("click", e => { if (e.target.closest("a")) setOpen(false); });
   document.addEventListener("click", e => { if (!bar.contains(e.target)) setOpen(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
-  mq.addEventListener("change", place); place();
+  mq.addEventListener("change", () => { if (!mq.matches) setOpen(false); });
 })();

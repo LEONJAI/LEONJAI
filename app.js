@@ -5,7 +5,7 @@
    Until both are replaced, the site runs in demo mode and sign-in is disabled. */
 const SUPABASE_URL = "https://jdilbwzpnfrzuliimgdc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY";
-const STUDIO_EMAIL = "hello@leonjai.example";
+const STUDIO_EMAIL = "real.leonjai@gmail.com";
 // Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
 const CHECKOUT_URL = "";
 /* ============================================================ */

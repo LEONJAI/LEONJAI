@@ -3,8 +3,8 @@
    • Project URL        → SUPABASE_URL      (looks like https://abcdxyz.supabase.co)
    • anon / public key  → SUPABASE_ANON_KEY (safe in the browser; NEVER paste the service_role key)
    Until both are replaced, the site runs in demo mode and sign-in is disabled. */
-   const SUPABASE_URL: 'https://jdilbwzpnfrzuliimgdc.supabase.co';
-   const SUPABASE_ANON_KEY: 'sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY',
+   const SUPABASE_URL: "https://jdilbwzpnfrzuliimgdc.supabase.co";
+   const SUPABASE_ANON_KEY: "sb_publishable_v1V0LgHVR_KDQZyI2_fJrg_TWZMwhjY",
 const STUDIO_EMAIL = "hello@leonjai.example";
 // Payment link for paid video licenses (e.g. a Stripe Payment Link). Leave empty until you have one.
 const CHECKOUT_URL = "";

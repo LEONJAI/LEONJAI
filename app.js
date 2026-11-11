@@ -58,9 +58,7 @@ const store = {
 function makeGallery() {
   const grid = (A, B) => B.flatMap(b => A.map(a => `${a} ${b}`));               // 20 x 10 = 200 unique titles, neighbours differ
   const pick = (arr, i) => arr[i % arr.length];
-  const photos = grid(["Harbor","Rice terraces","Neon alley","Street market","Cafe window","Night train","Temple steps","Mountain road","Fish stall","Lantern bridge",
-                       "Old shophouse","Tea fields","Bamboo path","Rooftop view","Ferry deck","Flower stall","Lake shore","Cable car","Station clock","Garden gate"],
-                      ["at dawn","at noon","at dusk","in rain","in fog","at night","in spring","in autumn","in winter","in summer"]);
+  const photos = Array.from({ length: 200 }, (_, i) => `Photo ${String(i + 1).padStart(3, "0")}`);
   const logos = grid(["Wave","Torii","Hangul","Star","Kite","Lotus","Crane","Peak","Sun","Leaf","Moon","Fox","Koi","Bridge","Anchor","Bloom","Flame","Orbit","Shell","Arrow"],
                      ["mark","monogram","seal","badge","emblem","line","crest","ring","stamp","wordmark"]);
   const videos = grid(["City timelapse","Ink in water","Rain on glass","Crowd crossing","Neon traffic","Ocean waves","Cloud drift","Steam rising","Falling petals","Night skyline",
@@ -70,7 +68,7 @@ function makeGallery() {
   const LC = ["#121A2B","#D7302B","#1D5C63","#6C3FD1","#C27C0E","#2E3A59"];
   const VC = ["#17324D","#3A2A57","#1F4D4A","#4D2A2A","#2B3A55","#3D4A2A"];
   return [
-    ...photos.map((t, i) => ({ type: "photo", title: t, color: pick(PC, i) })),
+    ...photos.map((t, i) => ({ type: "photo", title: t, color: pick(PC, i), preview_url: `photos/anime_${String(i + 1).padStart(3, "0")}.jpg` })),
     ...logos.map((t, i) => ({ type: "logo", title: t, color: pick(LC, i) })),
     ...videos.map((t, i) => ({ type: "video", title: t, color: pick(VC, i), price_usd: 12, price_php: 350 }))
   ];
@@ -630,8 +628,8 @@ async function loadPTab() {
     if (!target) return;
     e.preventDefault();
     if (id === "#gallery") {                                 // Gallery = its own page below the header
-      try { history.pushState(null, "", strip(location.pathname) + location.search + id); } catch {}
-      routeProfile(); return;
+      if (location.hash === id) routeProfile(); else location.hash = id;   // works on a website and on a local file; "hashchange" opens the pop-up
+      return;
     }
     if (view !== "home") setView("home");
     target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });

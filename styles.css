@@ -308,3 +308,11 @@ dialog::backdrop{background:rgba(8,12,26,.78);backdrop-filter:blur(6px)}
   .gal-panel .thumb{border-radius:12px;font-size:1.25rem}
   .gal-note{margin-top:14px;font-size:.72rem}
 }
+/* Sakura petals drift behind the gallery content */
+.gal-pop{isolation:isolate}
+.gal-pop-inner{position:relative;z-index:1}
+.sakura-layer{position:fixed;inset:var(--pop-top,72px) 0 0;z-index:0;overflow:hidden;pointer-events:none}
+.sakura-layer i{position:absolute;top:-24px;left:var(--x);width:11px;height:16px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#fff2f7,#f6a9c4 65%,#dc7399);opacity:.72;filter:drop-shadow(0 1px 2px #290b1c);animation:sakuraFall var(--time) linear var(--delay) infinite}
+.sakura-layer i:nth-child(1){--x:4%;--time:12s;--delay:-7s}.sakura-layer i:nth-child(2){--x:10%;--time:16s;--delay:-2s}.sakura-layer i:nth-child(3){--x:16%;--time:13s;--delay:-10s}.sakura-layer i:nth-child(4){--x:23%;--time:18s;--delay:-5s}.sakura-layer i:nth-child(5){--x:29%;--time:14s;--delay:-12s}.sakura-layer i:nth-child(6){--x:35%;--time:17s;--delay:-3s}.sakura-layer i:nth-child(7){--x:41%;--time:12s;--delay:-9s}.sakura-layer i:nth-child(8){--x:47%;--time:19s;--delay:-6s}.sakura-layer i:nth-child(9){--x:53%;--time:15s;--delay:-13s}.sakura-layer i:nth-child(10){--x:59%;--time:13s;--delay:-4s}.sakura-layer i:nth-child(11){--x:65%;--time:18s;--delay:-11s}.sakura-layer i:nth-child(12){--x:71%;--time:14s;--delay:-1s}.sakura-layer i:nth-child(13){--x:77%;--time:17s;--delay:-8s}.sakura-layer i:nth-child(14){--x:83%;--time:12s;--delay:-14s}.sakura-layer i:nth-child(15){--x:89%;--time:16s;--delay:-6s}.sakura-layer i:nth-child(16){--x:95%;--time:19s;--delay:-10s}.sakura-layer i:nth-child(17){--x:31%;--time:20s;--delay:-15s}.sakura-layer i:nth-child(18){--x:68%;--time:15s;--delay:-9s}
+@keyframes sakuraFall{0%{transform:translate3d(0,-5vh,0) rotate(0deg)}50%{transform:translate3d(35px,50vh,0) rotate(190deg)}100%{transform:translate3d(-25px,110vh,0) rotate(380deg)}}
+@media(prefers-reduced-motion:reduce){.sakura-layer{display:none}}

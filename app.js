@@ -1,3 +1,4 @@
+window.LEONJAI_BUILD = "20261111";   // lets index.html know this is the current app.js
 /* ====== 1. SUPABASE CONFIG — paste your project values ======
    Supabase Dashboard → Project Settings → API:
    • Project URL        → SUPABASE_URL      (looks like https://abcdxyz.supabase.co)
@@ -53,6 +54,27 @@ const store = {
 };
 
 /* ---------- Demo content (replaced by Supabase tables of the same name when they have rows) ---------- */
+/* ---------- Demo gallery: 200 photos, 200 logos, 200 videos (replaced by the Supabase "gallery" table when it has rows) ---------- */
+function makeGallery() {
+  const grid = (A, B) => B.flatMap(b => A.map(a => `${a} ${b}`));               // 20 x 10 = 200 unique titles, neighbours differ
+  const pick = (arr, i) => arr[i % arr.length];
+  const photos = grid(["Harbor","Rice terraces","Neon alley","Street market","Cafe window","Night train","Temple steps","Mountain road","Fish stall","Lantern bridge",
+                       "Old shophouse","Tea fields","Bamboo path","Rooftop view","Ferry deck","Flower stall","Lake shore","Cable car","Station clock","Garden gate"],
+                      ["at dawn","at noon","at dusk","in rain","in fog","at night","in spring","in autumn","in winter","in summer"]);
+  const logos = grid(["Wave","Torii","Hangul","Star","Kite","Lotus","Crane","Peak","Sun","Leaf","Moon","Fox","Koi","Bridge","Anchor","Bloom","Flame","Orbit","Shell","Arrow"],
+                     ["mark","monogram","seal","badge","emblem","line","crest","ring","stamp","wordmark"]);
+  const videos = grid(["City timelapse","Ink in water","Rain on glass","Crowd crossing","Neon traffic","Ocean waves","Cloud drift","Steam rising","Falling petals","Night skyline",
+                       "River bend","Market crowd","Train window","Fireworks","Snow falling","Sunrise haze","Rooftop wind","Candle flame","Paper boats","Street rain"],
+                      ["4K","4K slow-mo","4K aerial","4K loop","4K macro","4K dusk","4K dawn","4K mono","4K warm","4K cool"]);
+  const PC = ["#0E6E7E","#3C6E47","#6C3FD1","#B5532A","#2B4C7E","#8A2C5A","#1D5C63","#C27C0E"];
+  const LC = ["#121A2B","#D7302B","#1D5C63","#6C3FD1","#C27C0E","#2E3A59"];
+  const VC = ["#17324D","#3A2A57","#1F4D4A","#4D2A2A","#2B3A55","#3D4A2A"];
+  return [
+    ...photos.map((t, i) => ({ type: "photo", title: t, color: pick(PC, i) })),
+    ...logos.map((t, i) => ({ type: "logo", title: t, color: pick(LC, i) })),
+    ...videos.map((t, i) => ({ type: "video", title: t, color: pick(VC, i), price_usd: 12, price_php: 350 }))
+  ];
+}
 const DEMO = {
   work: [
     { title:"Nami Coffee", kind:"Brand identity", note:"Logo, packaging and menu for a Cebu roastery.", color:"#007E92" },
@@ -68,11 +90,7 @@ const DEMO = {
     { title:"Websites", note:"Fast, mobile-first sites you can edit yourself.", tag:"Web" },
     { title:"Social media kits", note:"Templates for posts, stories and covers.", tag:"Digital" }
   ],
-  gallery: [
-    ...["Harbor at dawn","Rice terraces","Neon alley","Street market","Cafe window","Night train"].map((t,i)=>({type:"photo",title:t,color:["#0E6E7E","#3C6E47","#6C3FD1","#B5532A","#2B4C7E","#8A2C5A"][i]})),
-    ...["Wave mark","Torii monogram","Hangul seal","Star badge","Kite emblem","Lotus line"].map((t,i)=>({type:"logo",title:t,color:["#121A2B","#D7302B","#1D5C63","#6C3FD1","#C27C0E","#2E3A59"][i]})),
-    ...["City timelapse 4K","Ink in water 4K","Rain on glass 4K","Crowd crossing 4K"].map((t,i)=>({type:"video",title:t,color:["#17324D","#3A2A57","#1F4D4A","#4D2A2A"][i],price_usd:12,price_php:350}))
-  ],
+  gallery: makeGallery(),
   prices: [
     { grp:"design", title:"Logo", note:"2 concepts, 2 revisions, full file pack.", usd:120, php:3500 },
     { grp:"design", title:"Poster or flyer", note:"One layout, print and web files.", usd:60, php:1800 },
@@ -116,6 +134,7 @@ const T = {
     clients:"함께한 고객",hero_eyebrow:"LeonjAI에 오신 것을 환영합니다",from:"부터",sending:"전송 중…",ok:"요청이 전송되었습니다. 영업일 기준 2일 안에 답장드립니다.",bad:"이름, 올바른 이메일, 필요한 작업을 입력하세요.",fail:"전송하지 못했습니다. 다시 시도하거나 이메일로 문의하세요.",demo:"데모 모드: app.js에 Supabase 키를 입력하세요.",copied:"복사되었습니다."}
 };
 Object.assign(T.en, {
+  show_more:"Show more",
   sign_in:"Sign in", sign_up:"Create account", sign_out:"Sign out", password:"Password", to_signup:"No account? Create one", to_signin:"Have an account? Sign in",
   download:"Download", buy_download:"Buy & download", need_signin:"Sign in to download this file.",
   video_paid:"Videos are paid licenses. Sign in, then buy to download.", video_buy_note:"Buy this clip to unlock the 4K download.",
@@ -124,6 +143,7 @@ Object.assign(T.en, {
   auth_demo:"Demo mode: add your Supabase keys in app.js to enable sign-in.", confirm_email:"Check your email to confirm your account, then sign in.",
   open:"Open preview", still_locked:"Payment not found yet. It can take a minute.", unlocked:"Purchase confirmed. You can download now." });
 Object.assign(T.ja, {
+  show_more:"もっと見る",
   sign_in:"ログイン", sign_up:"アカウント作成", sign_out:"ログアウト", password:"パスワード", to_signup:"アカウントをお持ちでない方はこちら", to_signin:"アカウントをお持ちの方はこちら",
   download:"ダウンロード", buy_download:"購入してダウンロード", need_signin:"ダウンロードするにはログインしてください。",
   video_paid:"動画は有料ライセンスです。ログイン後に購入するとダウンロードできます。", video_buy_note:"このクリップを購入すると4Kをダウンロードできます。",
@@ -132,6 +152,7 @@ Object.assign(T.ja, {
   auth_demo:"デモモード：app.js に Supabase のキーを設定するとログインできます。", confirm_email:"確認メールでアカウントを有効化してから、ログインしてください。",
   open:"プレビューを開く", still_locked:"支払いがまだ確認できません。少し待ってからお試しください。", unlocked:"購入を確認しました。ダウンロードできます。" });
 Object.assign(T.ko, {
+  show_more:"더 보기",
   sign_in:"로그인", sign_up:"계정 만들기", sign_out:"로그아웃", password:"비밀번호", to_signup:"계정이 없으신가요? 만들기", to_signin:"계정이 있으신가요? 로그인",
   download:"다운로드", buy_download:"구매 후 다운로드", need_signin:"다운로드하려면 로그인하세요.",
   video_paid:"영상은 유료 라이선스입니다. 로그인 후 구매하면 다운로드할 수 있습니다.", video_buy_note:"이 클립을 구매하면 4K 다운로드가 열립니다.",
@@ -247,10 +268,14 @@ function renderServices() {
 }
 const GAL_COLORS = ["#114B77","#C23B34","#F29A2E","#2B4C7E","#6C3FD1","#1D5C63"];
 const currentItems = () => DB.gallery.filter(i => i.type === tab);
+const galCols = () => innerWidth > 1100 ? 7 : innerWidth > 860 ? 5 : 3;   // matches the grid columns in the CSS
+const galPage = () => galCols() * 4;                                       // four full rows at a time
+let galShown = 28;
 function renderGallery() {
   const g = $("#gal-grid"); g.textContent = "";
-  currentItems().forEach((i, n) => {
-    i._c = i.color || GAL_COLORS[n % GAL_COLORS.length];
+  const items = currentItems();
+  items.forEach((i, n) => { i._c = i.color || GAL_COLORS[n % GAL_COLORS.length]; });   // colors for every item (the lightbox steps through all of them)
+  items.slice(0, galShown).forEach((i, n) => {
     const th = el("button", "thumb", initials(i.title)); th.type = "button";
     th.style.background = `linear-gradient(135deg, ${i._c}, color-mix(in srgb, ${i._c} 55%, #000))`;
     if (i.preview_url && i.type !== "video") { th.textContent = ""; th.style.background = `center / cover url("${encodeURI(i.preview_url)}")`; }
@@ -260,6 +285,11 @@ function renderGallery() {
     th.addEventListener("contextmenu", e => e.preventDefault());
     g.append(th);
   });
+  if (items.length > galShown) {
+    const more = el("button", "btn orange-btn small gal-more", `${tr("show_more")} (${items.length - galShown})`); more.type = "button";
+    more.addEventListener("click", () => { galShown += galPage(); renderGallery(); });
+    g.append(more);
+  }
 }
 function renderPrices() {
   const sym = cur === "USD" ? "$" : "₱";
@@ -287,7 +317,7 @@ function fillServiceSelect() {
 
 /* ---------- Interactions ---------- */
 $$("[data-tab]").forEach(b => b.addEventListener("click", () => {
-  tab = b.dataset.tab; $$("[data-tab]").forEach(x => x.setAttribute("aria-selected", x === b)); renderGallery();
+  tab = b.dataset.tab; galShown = galPage(); $$("[data-tab]").forEach(x => x.setAttribute("aria-selected", x === b)); renderGallery();
 }));
 $$("[data-cur]").forEach(b => b.addEventListener("click", () => { cur = b.dataset.cur; store.set("cur", cur); renderPrices(); }));
 document.addEventListener("click", e => {          // ↗ buttons preselect the service in the quote form
@@ -299,7 +329,7 @@ document.addEventListener("click", e => {          // ↗ buttons preselect the 
 
 /* ---------- Auth (Supabase Auth) ---------- */
 const authDlg = $("#auth"), lb = $("#lightbox"), lbMsg = $("#lb-msg");
-let user = null, owned = new Set(), authMode = "in";
+let user = null, owned = new Set(), authMode = "in", authReady = false;
 async function loadOwned() {
   owned = new Set();
   if (!db || !user) return;
@@ -308,11 +338,11 @@ async function loadOwned() {
 }
 if (db) db.auth.onAuthStateChange((_ev, session) => {
   user = session?.user || null;
-  setTimeout(async () => { await loadOwned(); refreshAuthUI(); if (lb.open) renderLightbox(); }, 0);   // avoid calling Supabase inside its own callback
+  setTimeout(async () => { await loadOwned(); refreshAuthUI(); if (lb.open) renderLightbox(); authReady = true; routeProfile(); }, 0);   // avoid calling Supabase inside its own callback
 });
 function refreshAuthUI() {
   const b = $("#auth-btn");
-  if (user) { const nm = (user.user_metadata?.username || (user.email || "").split("@")[0]).slice(0, 14); b.textContent = `${nm} · ${tr("sign_out")}`; b.setAttribute("aria-label", `${tr("sign_out")} (${user.email})`); }
+  if (user) { const nm = user.user_metadata?.username || (user.email || "").split("@")[0]; b.textContent = nm; b.title = nm; b.setAttribute("aria-label", `Profile (${user.email})`); }
   else { b.textContent = tr("sign_in"); b.removeAttribute("aria-label"); }
   $("#auth-title").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
   $("#auth-submit").textContent = tr(authMode === "in" ? "sign_in" : "sign_up");
@@ -324,7 +354,7 @@ function refreshAuthUI() {
   $("#a-pass").autocomplete = authMode === "in" ? "current-password" : "new-password";
 }
 function openAuth(mode) { authMode = mode || "in"; $("#auth-msg").textContent = ""; refreshAuthUI(); authDlg.showModal(); $("#a-email").focus(); }
-$("#auth-btn").addEventListener("click", async () => { if (user) await db.auth.signOut(); else openAuth("in"); });
+$("#auth-btn").addEventListener("click", () => { if (user) { if (location.hash === "#profile") routeProfile(); else location.hash = "#profile"; } else openAuth("in"); });
 $("#auth-switch").addEventListener("click", () => { authMode = authMode === "in" ? "up" : "in"; $("#auth-msg").textContent = ""; refreshAuthUI(); });
 $("#password-toggle").addEventListener("click", () => {
   const input = $("#a-pass"), visible = input.type === "password";
@@ -465,10 +495,118 @@ $("#copy-mail").addEventListener("click", async () => {
   clearTimeout(out._t); out._t = setTimeout(() => { out.textContent = ""; }, 3500);
 });
 
+/* ---------- Profile page (opens when a signed-in user taps their username) ---------- */
+const mainEl = $("#main"), profileEl = $("#profile");
+let ptab = "ongoing", ptabToken = 0;
+const fmtDate = d => { try { return new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); } catch { return ""; } };
+let view = "home";
+const galPop = $("#gal-pop");
+function placePop() { const bar = $(".barwrap"); galPop.style.setProperty("--pop-top", Math.round(bar.getBoundingClientRect().bottom + 8) + "px"); }
+addEventListener("resize", () => { if (view === "gallery") placePop(); });
+function setView(v) {                                   // "home" | "gallery" (pop-up under the header) | "profile"
+  const was = view; view = v;
+  profileEl.hidden = v !== "profile"; mainEl.hidden = v === "profile";
+  if (v === "gallery" && was !== "gallery") {
+    placePop(); galPop.hidden = false; document.documentElement.style.overflow = "hidden";
+    galShown = galPage(); renderGallery(); galPop.scrollTop = 0; galPop.focus({ preventScroll: true });
+  } else if (v !== "gallery" && was === "gallery") {
+    galPop.hidden = true; document.documentElement.style.overflow = "";
+  }
+  if (v === "profile" && was !== "profile") window.scrollTo(0, 0);
+}
+const showProfile = on => setView(on ? "profile" : "home");
+function goHome() { try { history.pushState(null, "", location.pathname + location.search); } catch {} routeProfile(); window.scrollTo(0, 0); }
+function routeProfile() {
+  const hash = location.hash;
+  if (hash === "#profile" && !user && authReady) { try { history.replaceState(null, "", location.pathname + location.search); } catch {} }
+  const next = hash === "#profile" ? (user ? "profile" : view === "profile" ? "home" : view) : hash === "#gallery" ? "gallery" : "home";
+  if (next === view) { if (next === "profile") renderProfileValues(); return; }
+  setView(next);
+  if (next === "profile") { renderProfileValues(); loadPTab(); }
+}
+addEventListener("hashchange", routeProfile); addEventListener("popstate", routeProfile);
+function renderProfileValues() {
+  const m = user?.user_metadata || {};
+  $("#pf-username").textContent = m.username || (user.email || "").split("@")[0];
+  const n = $("#pf-full_name"); n.textContent = m.full_name || "Add your name"; n.classList.toggle("muted", !m.full_name);
+}
+$("#pf-home").addEventListener("click", goHome);
+$(".gal-home").addEventListener("click", goHome);
+addEventListener("keydown", e => { if (e.key === "Escape" && view === "gallery" && !lb.open && !authDlg.open) goHome(); });
+$("#pf-signout").addEventListener("click", async () => { await db.auth.signOut(); user = null; refreshAuthUI(); goHome(); });
+
+// edit username / name
+$$("#pf-grid [data-field]").forEach(tile => {
+  const field = tile.dataset.field, view = $(".pf-view", tile), form = $(".pf-form", tile), msg = $(".pf-msg", tile), input = $("input", form);
+  const say = (x, c) => { msg.textContent = x; msg.className = "pf-msg" + (c ? " " + c : ""); };
+  $(".pf-edit", tile).addEventListener("click", () => {
+    input.value = user?.user_metadata?.[field] || (field === "username" ? $("#pf-username").textContent : "");
+    view.hidden = true; form.hidden = false; say(""); input.focus();
+  });
+  $(".pf-cancel", tile).addEventListener("click", () => { form.hidden = true; view.hidden = false; say(""); });
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const v = input.value.trim();
+    if (field === "username" && !/^[A-Za-z0-9_.]{3,20}$/.test(v)) return say("Username: 3–20 letters, numbers, dot or underscore.", "err");
+    if (field === "full_name" && (v.length < 1 || v.length > 60)) return say("Enter your name (up to 60 characters).", "err");
+    say(tr("sending"));
+    try {
+      const { data, error } = await db.auth.updateUser({ data: { [field]: v } });
+      if (error) return say(friendly(error), "err");
+      user = data.user || user; refreshAuthUI(); renderProfileValues();
+      form.hidden = true; view.hidden = false; say("Saved.", "ok");
+    } catch (err) { say(friendly(err), "err"); }
+  });
+});
+
+// change password
+$("#pf-pass").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = $("#pf-pass-msg"), say = (x, c) => { m.textContent = x; m.className = "pf-msg" + (c ? " " + c : ""); };
+  const p1 = $("#pf-p1").value, p2 = $("#pf-p2").value;
+  if (p1.length < 6) return say("Password must be at least 6 characters.", "err");
+  if (p1 !== p2) return say("The two passwords don't match.", "err");
+  say(tr("sending"));
+  try {
+    const { error } = await db.auth.updateUser({ password: p1 });
+    if (error) return say(friendly(error), "err");
+    $("#pf-pass").reset(); say("Password updated.", "ok");
+  } catch (err) { say(friendly(err), "err"); }
+});
+
+// tabs: Ongoing (quote requests) · Work (licensed items) · Other (account details)
+$$("[data-ptab]").forEach(b => b.addEventListener("click", () => { ptab = b.dataset.ptab; loadPTab(); }));
+async function loadPTab() {
+  const box = $("#pf-panel"), token = ++ptabToken; box.textContent = "";
+  $$("[data-ptab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.ptab === ptab)));
+  const row = (a, b) => { const r = el("div", "prow"); r.append(el("span", null, a), el("span", "pval", b || "—")); return r; };
+  if (ptab === "other") {
+    const m = user.user_metadata || {};
+    box.append(row("Email", user.email), row("Date of birth", m.date_of_birth), row("Address", m.address), row("Member since", fmtDate(user.created_at)));
+    return;
+  }
+  box.append(el("p", "pempty", "Loading…"));
+  try {
+    let data, error;
+    if (ptab === "ongoing") ({ data, error } = await db.from("quotes").select("service,budget,details,created_at").order("created_at", { ascending: false }).limit(20));
+    else ({ data, error } = await db.from("purchases").select("created_at,gallery(title,type)").order("created_at", { ascending: false }).limit(50));
+    if (token !== ptabToken) return;
+    if (error) throw error;
+    box.textContent = "";
+    if (!data.length) return box.append(el("p", "pempty", ptab === "ongoing" ? "No quote requests yet. Use “Get a quote” on the home page." : "No licensed work yet. Paid clips you buy will show up here."));
+    data.forEach(r => {
+      if (ptab === "ongoing") {
+        const x = el("div", "prow col"); x.append(el("strong", null, r.service || "Request"), el("span", "pmeta", [fmtDate(r.created_at), r.budget].filter(Boolean).join(" · ")), el("span", "pnote", (r.details || "").slice(0, 140)));
+        box.append(x);
+      } else box.append(row(r.gallery?.title || "Item", fmtDate(r.created_at)));
+    });
+  } catch { if (token === ptabToken) { box.textContent = ""; box.append(el("p", "pempty", "Couldn't load this yet. Try again in a moment.")); } }
+}
+
 /* ---------- Init ---------- */
 (async () => {
   await Promise.all([load("work","id"), load("services","id"), load("gallery","id"), load("prices","id")]);
-  renderWork(); renderServices(); renderGallery(); renderClients(); fillServiceSelect(); applyLang(lang);
+  renderWork(); renderServices(); renderGallery(); renderClients(); fillServiceSelect(); applyLang(lang); routeProfile();
 })();
 
 /* ---------- Clean URLs: never show ".html" in the address bar or in links ---------- */
@@ -491,6 +629,11 @@ $("#copy-mail").addEventListener("click", async () => {
     const id = a.getAttribute("href"), target = id.length > 1 && document.querySelector(id);
     if (!target) return;
     e.preventDefault();
+    if (id === "#gallery") {                                 // Gallery = its own page below the header
+      try { history.pushState(null, "", strip(location.pathname) + location.search + id); } catch {}
+      routeProfile(); return;
+    }
+    if (view !== "home") setView("home");
     target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     clean(id);
   });

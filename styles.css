@@ -244,3 +244,67 @@ dialog::backdrop{background:rgba(8,12,26,.78);backdrop-filter:blur(6px)}
 #auth .dlg-head{position:relative;justify-content:center;min-height:36px}
 #auth .dlg-head h3{text-align:center;padding:0 44px}
 #auth .dlg-head .x{position:absolute;right:0;top:0}
+
+/* ---------- profile page ---------- */
+.profile{padding-top:12px;position:relative;z-index:1}
+.pf-label{font:600 .78rem var(--mono);letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.pf-view{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pf-val{font-size:1.6rem;line-height:1.2;overflow-wrap:anywhere}
+.pf-val.muted{font-weight:400;font-size:1.1rem;opacity:.55}
+.pf-form input,#pf-pass input{border-color:rgba(15,58,92,.25);margin-bottom:10px}
+.navy #pf-pass input{border-color:transparent}
+.pf-btns{display:flex;gap:8px;flex-wrap:wrap}
+.pf-msg{min-height:1.4em;margin-top:10px;font:400 .8rem var(--mono)}
+.pf-msg.ok{color:#0A7A3F}.pf-msg.err{color:var(--red)}
+.navy .pf-msg.ok{color:#7FE3A5}.navy .pf-msg.err{color:#FFB4A8}
+.pf.signout{display:grid;place-items:center;min-height:90px}
+.pf-panel{margin-top:18px;min-height:220px}
+.prow{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid rgba(255,255,255,.14);font-size:.92rem;overflow-wrap:anywhere}
+.prow:first-child{border-top:0}
+.prow .pval{text-align:right;opacity:.85}
+.prow.col{flex-direction:column;gap:2px}
+.pmeta{font:400 .75rem var(--mono);opacity:.65}.pnote{font-size:.85rem;opacity:.8}
+.pempty{opacity:.7;padding:18px 0}
+@media (max-width:860px){
+  #pf-tabs{order:9;grid-row:auto}
+  .pf-val{font-size:1.2rem}
+  .pf-panel{min-height:140px}
+  .prow{font-size:.82rem;padding:9px 0}
+  .pf.signout{min-height:64px}
+  #profile .pf-label{font-size:.68rem}
+}
+.authbtn{max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.pf .ghost-btn{background:transparent;border:2px solid var(--navy);color:var(--navy)}
+.pf .ghost-btn:hover{background:var(--navy);color:#fff}
+
+.gal-more{grid-column:1/-1;justify-self:center;margin-top:4px}
+
+/* gallery pop-up: opens under the navigation bar, over the page (like the sign-in box) */
+.gal-pop{position:fixed;left:0;right:0;bottom:0;top:var(--pop-top,72px);z-index:15;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  background:rgba(8,13,28,.82);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:12px 0 24px;animation:galIn .22s ease-out}
+.gal-pop[hidden]{display:none}
+.gal-pop:focus{outline:none}
+@keyframes galIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.gal-pop{animation:none}}
+.gal-pop .bento{margin-bottom:12px}
+/* centered "Gallery" title, Close button at the right */
+.gal-pop .head{position:relative;justify-content:center;min-height:64px}
+.gal-pop .head h2{text-align:center;padding:0 110px}
+.gal-home{position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+@media (max-width:860px){.gal-pop{padding:8px 0 20px}.gal-pop .bento{margin-bottom:8px}.gal-pop .head{min-height:56px}.gal-pop .head h2{padding:0 96px}.gal-home{right:10px}}
+
+/* gallery pop-up layout (follows the drawing): title bar, then one panel with centered tabs and a wide grid of squares */
+.gal-panel{padding:28px clamp(14px,3vw,32px) 24px}
+.gal-tabs{justify-content:center;margin-top:0;margin-bottom:22px}
+.gal-panel .gal-grid{grid-column:auto;grid-template-columns:repeat(7,1fr);gap:12px}
+.gal-panel .thumb{border-radius:16px;font-size:clamp(1rem,2vw,1.6rem)}
+.gal-panel .thumb::after{font-size:.5rem}
+.gal-note{margin-top:22px;text-align:center;font-size:.8rem;opacity:.75}
+@media (max-width:1100px){.gal-panel .gal-grid{grid-template-columns:repeat(5,1fr)}}
+@media (max-width:860px){
+  .gal-panel{padding:16px 12px 16px}
+  .gal-tabs{margin-bottom:14px}
+  .gal-panel .gal-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .gal-panel .thumb{border-radius:12px;font-size:1.25rem}
+  .gal-note{margin-top:14px;font-size:.72rem}
+}

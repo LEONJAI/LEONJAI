@@ -34,6 +34,7 @@ drop policy if exists "public read prices"   on prices;
 drop policy if exists "public read gallery"  on gallery;
 drop policy if exists "anyone can send quote" on quotes;
 drop policy if exists "read own purchases"   on purchases;
+drop policy if exists "read own quotes"      on quotes;
 
 create policy "public read work"     on work     for select using (true);
 create policy "public read services" on services for select using (true);
@@ -41,6 +42,7 @@ create policy "public read prices"   on prices   for select using (true);
 create policy "public read gallery"  on gallery  for select using (true);
 create policy "anyone can send quote" on quotes  for insert with check (true);
 create policy "read own purchases"   on purchases for select using (auth.uid() = user_id);
+create policy "read own quotes"      on quotes    for select to authenticated using (lower(email) = lower(auth.jwt() ->> 'email'));
 
 -- Private storage buckets for downloadable files (signed URLs, 60 s)
 insert into storage.buckets (id, name, public) values ('downloads','downloads',false), ('videos','videos',false) on conflict do nothing;

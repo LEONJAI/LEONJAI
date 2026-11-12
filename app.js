@@ -69,8 +69,7 @@ function makeGallery() {
   const VC = ["#17324D","#3A2A57","#1F4D4A","#4D2A2A","#2B3A55","#3D4A2A"];
   return [
     ...photos.map((t, i) => ({ type: "photo", title: t, color: pick(PC, i), preview_url: `photos/anime_${String(i + 1).padStart(3, "0")}.jpg` })),
-    ...logos.map((t, i) => ({ type: "logo", title: t, color: pick(LC, i) })),
-    ...videos.map((t, i) => ({ type: "video", title: t, color: pick(VC, i), price_usd: 12, price_php: 350 }))
+    ...logos.map((t, i) => ({ type: "logo", title: t, color: pick(LC, i) }))
   ];
 }
 const DEMO = {
@@ -100,6 +99,12 @@ const DEMO = {
   ]
 };
 const DB = { ...DEMO };
+const USER_VIDEOS = Array.from({ length: 23 }, (_, i) => ({
+  type: "video",
+  title: `Video ${String(i + 1).padStart(2, "0")}`,
+  preview_url: `videos/clip-${String(i + 1).padStart(2, "0")}.${i === 0 ? "webm" : "mp4"}`,
+  requires_purchase: false
+}));
 async function load(table, order) {
   if (!db) return;
   let q = db.from(table).select("*"); if (order) q = q.order(order);
@@ -112,21 +117,21 @@ const T = {
   en:{nav_work:"Work",nav_services:"Services",nav_gallery:"Gallery",nav_pricing:"Pricing",nav_contact:"Contact",get_quote:"Get a quote",
     hero_title:"Graphic design that gets noticed.",hero_sub:"We design logos, posters and brand identities for small businesses and creative teams.",cta_quote:"Get a free quote",cta_work:"See our work",hint:"Move your cursor over this tile",
     work_title:"Selected work",serv_title:"Services",serv_sub:"Design products and website services for small businesses and creators, wherever they are. Need one thing or a whole brand? Pick what fits and we will help with the rest.",
-    gal_title:"Gallery",gal_sub:"Protected previews. License a photo, logo or 4K clip, or",gal_link:"subscribe for monthly downloads",tab_photo:"Photos",tab_logo:"Logos",tab_video:"Video",
+    gal_title:"Gallery",gal_sub:"Browse photos, logos and video clips. Sign in to watch videos.",gal_link:"View plans",tab_photo:"Photos",tab_logo:"Logos",tab_video:"Video",
     price_title:"Pricing",price_sub:"Starting prices. Dollar rates are for clients abroad. Peso rates are set for the local market, so they run lower than a straight conversion. Choose a currency, or ask for a custom quote.",price_g1:"Graphic design and digital products",price_g2:"Website and digital services",price_more:"Need something not listed?",price_ask:"Ask for a quote",
     q_title:"Get a free quote",q_sub:"Tell us what you need and when. We reply within two working days.",q_name:"Your name",q_email:"Email",q_need:"What do you need?",q_choose:"Choose one",q_budget:"Budget",q_details:"Project details",q_send:"Request my free quote",q_copy:"Or copy our email",
     clients:"Trusted by",hero_eyebrow:"Welcome to LeonjAI",from:"from",sending:"Sending…",ok:"Request sent. We reply within two working days.",bad:"Enter your name, a valid email and what you need.",fail:"Couldn't send. Try again, or email us directly.",demo:"Demo mode: add your Supabase keys in app.js to receive requests.",copied:"Email copied."},
   ja:{nav_work:"実績",nav_services:"サービス",nav_gallery:"ギャラリー",nav_pricing:"料金",nav_contact:"お問い合わせ",get_quote:"見積もり",
     hero_title:"目立つ、グラフィックデザイン。",hero_sub:"小さな会社やクリエイターのために、ロゴ、ポスター、ブランドを設計します。",cta_quote:"無料で見積もる",cta_work:"実績を見る",hint:"このタイルの上でカーソルを動かしてください",
     work_title:"制作実績",serv_title:"サービス",serv_sub:"小規模事業者やクリエイター向けのデザインとウェブサービス。ひとつだけでも、ブランド全体でもご相談ください。",
-    gal_title:"ギャラリー",gal_sub:"保護されたプレビュー。写真・ロゴ・4K映像のライセンス、または",gal_link:"月額ダウンロードを購読",tab_photo:"写真",tab_logo:"ロゴ",tab_video:"動画",
+    gal_title:"ギャラリー",gal_sub:"写真、ロゴ、動画をご覧ください。動画の再生にはログインが必要です。",gal_link:"プランを見る",tab_photo:"写真",tab_logo:"ロゴ",tab_video:"動画",
     price_title:"料金",price_sub:"開始価格です。ドルは海外のお客様向け、ペソは国内向けの価格です。通貨を選ぶか、個別にお見積もりします。",price_g1:"グラフィックデザインとデジタル商品",price_g2:"ウェブとデジタルサービス",price_more:"掲載のない内容は",price_ask:"見積もりを依頼",
     q_title:"無料見積もり",q_sub:"ご希望の内容と時期をお知らせください。2営業日以内に返信します。",q_name:"お名前",q_email:"メール",q_need:"ご依頼内容",q_choose:"選択してください",q_budget:"予算",q_details:"プロジェクトの詳細",q_send:"無料見積もりを依頼",q_copy:"メールアドレスをコピー",
     clients:"お取引先",hero_eyebrow:"LeonjAIへようこそ",from:"から",sending:"送信中…",ok:"送信しました。2営業日以内に返信します。",bad:"お名前、有効なメール、ご依頼内容を入力してください。",fail:"送信できませんでした。再度お試しいただくか、メールでご連絡ください。",demo:"デモモード：app.js に Supabase のキーを設定してください。",copied:"コピーしました。"},
   ko:{nav_work:"작업",nav_services:"서비스",nav_gallery:"갤러리",nav_pricing:"가격",nav_contact:"문의",get_quote:"견적 받기",
     hero_title:"눈에 띄는 그래픽 디자인.",hero_sub:"소규모 사업자와 크리에이티브 팀을 위해 로고, 포스터, 브랜드 아이덴티티를 디자인합니다.",cta_quote:"무료 견적 받기",cta_work:"작업 보기",hint:"이 타일 위에서 커서를 움직여 보세요",
     work_title:"선별 작업",serv_title:"서비스",serv_sub:"소규모 사업자와 크리에이터를 위한 디자인 및 웹 서비스. 하나만 필요하든 브랜드 전체가 필요하든 편하게 선택하세요.",
-    gal_title:"갤러리",gal_sub:"보호된 미리보기. 사진, 로고, 4K 영상을 라이선스하거나",gal_link:"월간 다운로드를 구독하세요",tab_photo:"사진",tab_logo:"로고",tab_video:"영상",
+    gal_title:"갤러리",gal_sub:"사진, 로고, 동영상을 둘러보세요. 동영상 재생은 로그인 후 가능합니다.",gal_link:"요금제 보기",tab_photo:"사진",tab_logo:"로고",tab_video:"영상",
     price_title:"가격",price_sub:"시작 가격입니다. 달러는 해외 고객용, 페소는 현지 시장용입니다. 통화를 선택하거나 맞춤 견적을 요청하세요.",price_g1:"그래픽 디자인 및 디지털 상품",price_g2:"웹사이트 및 디지털 서비스",price_more:"목록에 없는 작업은",price_ask:"견적 요청",
     q_title:"무료 견적",q_sub:"필요한 작업과 일정을 알려주세요. 영업일 기준 2일 안에 답장드립니다.",q_name:"이름",q_email:"이메일",q_need:"필요한 작업",q_choose:"선택하세요",q_budget:"예산",q_details:"프로젝트 상세",q_send:"무료 견적 요청",q_copy:"이메일 주소 복사",
     clients:"함께한 고객",hero_eyebrow:"LeonjAI에 오신 것을 환영합니다",from:"부터",sending:"전송 중…",ok:"요청이 전송되었습니다. 영업일 기준 2일 안에 답장드립니다.",bad:"이름, 올바른 이메일, 필요한 작업을 입력하세요.",fail:"전송하지 못했습니다. 다시 시도하거나 이메일로 문의하세요.",demo:"데모 모드: app.js에 Supabase 키를 입력하세요.",copied:"복사되었습니다."}
@@ -279,7 +284,7 @@ function renderGallery() {
     if (i.preview_url && i.type !== "video") { th.textContent = ""; th.style.background = `center / cover url("${encodeURI(i.preview_url)}")`; }
     if (i.type === "video") th.append(el("span", "play", "▶ 4K"));
     th.setAttribute("aria-label", `${i.title} – ${tr("open")}`); th.title = i.title;
-    th.addEventListener("click", () => openLightbox(n));
+    th.addEventListener("click", () => openGalleryItem(n));
     th.addEventListener("contextmenu", e => e.preventDefault());
     g.append(th);
   });
@@ -328,6 +333,7 @@ document.addEventListener("click", e => {          // ↗ buttons preselect the 
 /* ---------- Auth (Supabase Auth) ---------- */
 const authDlg = $("#auth"), lb = $("#lightbox"), lbMsg = $("#lb-msg");
 let user = null, owned = new Set(), authMode = "in", authReady = false;
+let pendingVideoIndex = null;
 async function loadOwned() {
   owned = new Set();
   if (!db || !user) return;
@@ -336,7 +342,13 @@ async function loadOwned() {
 }
 if (db) db.auth.onAuthStateChange((_ev, session) => {
   user = session?.user || null;
-  setTimeout(async () => { await loadOwned(); refreshAuthUI(); if (lb.open) renderLightbox(); authReady = true; routeProfile(); }, 0);   // avoid calling Supabase inside its own callback
+  setTimeout(async () => {
+    await loadOwned(); refreshAuthUI(); if (lb.open) renderLightbox(); authReady = true; routeProfile();
+    if (user && pendingVideoIndex !== null) {
+      const index = pendingVideoIndex; pendingVideoIndex = null;
+      openLightbox(index);
+    }
+  }, 0);   // avoid calling Supabase inside its own callback
 });
 function refreshAuthUI() {
   const b = $("#auth-btn");
@@ -394,6 +406,15 @@ $("#auth-form").addEventListener("submit", async e => {
 /* ---------- Gallery lightbox: zoom, download (sign-in), paid videos ---------- */
 let lbItems = [], lbIdx = 0, zoom = 1;
 const setMsg = (x, c) => { lbMsg.textContent = x; lbMsg.className = c || ""; };
+function openGalleryItem(i) {
+  const item = currentItems()[i];
+  if (item?.type === "video" && !user) {
+    pendingVideoIndex = i;
+    openAuth("in");
+    return;
+  }
+  openLightbox(i);
+}
 function openLightbox(i) { lbItems = currentItems(); lbIdx = i; zoom = 1; renderLightbox(); lb.showModal(); }
 function setZoom(z) {
   zoom = Math.min(4, Math.max(1, z));
@@ -402,11 +423,11 @@ function setZoom(z) {
 }
 function renderLightbox() {
   const it = lbItems[lbIdx]; if (!it) return;
-  const paid = it.type === "video", has = paid && !!user && owned.has(it.id);
+  const video = it.type === "video", paid = video && it.requires_purchase !== false, has = paid && !!user && owned.has(it.id);
   $("#lb-title").textContent = it.title;
   const stage = $("#lb-stage"); stage.textContent = "";
   const box = el("div", "lb-media wm");
-  if (paid && it.preview_url) {
+  if (video && it.preview_url) {
     const v = el("video"); v.src = it.preview_url; v.controls = true; v.muted = true; v.playsInline = true;
     v.setAttribute("controlslist", "nodownload noremoteplayback"); v.disablePictureInPicture = true;
     v.addEventListener("contextmenu", e => e.preventDefault()); box.append(v);
@@ -416,13 +437,14 @@ function renderLightbox() {
   } else {
     box.classList.add("thumb", "zoomable"); box.textContent = initials(it.title);
     box.style.background = `linear-gradient(135deg, ${it._c}, color-mix(in srgb, ${it._c} 55%, #000))`;
-    if (paid) box.append(el("span", "play", "▶ 4K"));
+    if (video) box.append(el("span", "play", "▶ 4K"));
   }
   box.addEventListener("click", () => { if (box.classList.contains("zoomable")) setZoom(zoom > 1 ? 1 : 2); });
   stage.append(box); setZoom(zoom);
 
   const price = Number(cur === "USD" ? it.price_usd : it.price_php);
   $("#lb-price").textContent = paid && !has && price ? (cur === "USD" ? "$" : "₱") + price.toLocaleString("en-US") : "";
+  $("#lb-dl").hidden = video && !paid;
   $("#lb-dl").textContent = !paid || has ? "⬇ " + tr("download") : tr("buy_download");
   $("#lb-refresh").hidden = !(paid && user && !has);
   setMsg(!user ? tr(paid ? "video_paid" : "need_signin") : paid && !has ? tr("video_buy_note") : "");
@@ -604,6 +626,7 @@ async function loadPTab() {
 /* ---------- Init ---------- */
 (async () => {
   await Promise.all([load("work","id"), load("services","id"), load("gallery","id"), load("prices","id")]);
+  DB.gallery.push(...USER_VIDEOS);
   renderWork(); renderServices(); renderGallery(); renderClients(); fillServiceSelect(); applyLang(lang); routeProfile();
 })();
 
